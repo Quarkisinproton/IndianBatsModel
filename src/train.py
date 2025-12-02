@@ -20,6 +20,8 @@ def train_model(config):
     train_cfg = config.get('training', {})
     batch_size = train_cfg.get('batch_size') or 16
     lr = train_cfg.get('learning_rate') or 1e-3
+    num_epochs = train_cfg.get('num_epochs') or 10
+    num_workers = train_cfg.get('num_workers') if train_cfg.get('num_workers') is not None else 0
 
     # If features CSV exists, use fused dataset
     features_csv = data_cfg.get('features_csv')
@@ -27,10 +29,30 @@ def train_model(config):
         train_dataset = SpectrogramWithFeaturesDataset(train_dir, features_csv)
         use_features = True
     else:
-        train_dataset = SpectrogramDataset(train_dir, transform=None)
+        # don't override dataset transforms here; allow dataset to apply its defaults
+        train_dataset = SpectrogramDataset(train_dir)
         use_features = False
 
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2)
+    # build a weighted sampler to help with class imbalance when possible
+    try:
+        if use_features:
+            labels = train_dataset.labels
+        else:
+            # ImageFolder-like dataset exposes .samples as (path, class_idx)
+            labels = [y for _, y in train_dataset.samples] if hasattr(train_dataset, 'samples') else getattr(train_dataset, 'targets', [])
+        labels = np.array(labels, dtype=int)
+        if labels.size > 0:
+            class_sample_counts = np.bincount(labels)
+            class_weights = 1.0 / class_sample_counts
+            sample_weights = class_weights[labels]
+            from torch.utils.data import WeightedRandomSampler
+            sampler = WeightedRandomSampler(sample_weights, num_samples=len(sample_weights), replacement=True)
+        else:
+            sampler = None
+    except Exception:
+        sampler = None
+
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=(sampler is None), sampler=sampler, num_workers=num_workers)
 
     # Initialize model, loss function, and optimizer
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -38,7 +60,8 @@ def train_model(config):
         # infer numeric feature dimension from a sample
         sample_image, sample_feat, sample_label = train_dataset[0]
         feat_dim = sample_feat.numel()
-        model = CNNWithFeatures(num_classes=num_classes, numeric_feat_dim=feat_dim, pretrained=False).to(device)
+        # use pretrained backbone for better transfer learning when data is small
+        model = CNNWithFeatures(num_classes=num_classes, numeric_feat_dim=feat_dim, pretrained=True).to(device)
     else:
         model = CNN(num_classes=num_classes).to(device)
 
@@ -46,7 +69,6 @@ def train_model(config):
     optimizer = optim.Adam(model.parameters(), lr=lr)
 
     # Training loop
-    num_epochs = train_cfg.get('num_epochs') or 10
     for epoch in range(num_epochs):
         model.train()
         running_loss = 0.0
@@ -82,6 +104,11 @@ def train_model(config):
     model_save_path = train_cfg.get('model_save_path') or 'models/bat_model.pth'
     os.makedirs(os.path.dirname(model_save_path) or '.', exist_ok=True)
     save_model(model, model_save_path)
+    # save class mapping for inference if available
+    class_map = getattr(train_dataset, 'class_to_idx', None)
+    if class_map:
+        with open(model_save_path + '.classes.json', 'w') as f:
+            json.dump(class_map, f)
     print('Saved model to', model_save_path)
 
 if __name__ == "__main__":
