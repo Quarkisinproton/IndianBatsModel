@@ -47,8 +47,8 @@ def compute_end_frequency(y: np.ndarray, sr: int, start_s: float, end_s: float, 
     return float(freqs[max_bin])
 
 
-def process_all_and_write_csv(raw_audio_dir: str, json_dir: str, out_csv: str, species_key: str = 'label') -> None:
-    raw_audio_dir = Path(raw_audio_dir)
+def process_all_and_write_csv(raw_audio_dirs: list, json_dir: str, out_csv: str, species_key: str = 'label') -> None:
+    raw_audio_dirs = [Path(d) for d in raw_audio_dirs]
     json_dir = Path(json_dir)
     out_csv = Path(out_csv)
     out_csv.parent.mkdir(parents=True, exist_ok=True)
@@ -62,7 +62,7 @@ def process_all_and_write_csv(raw_audio_dir: str, json_dir: str, out_csv: str, s
                 data = w2s.load_wombat_json(jpath)
             except Exception:
                 continue
-            audio_path = w2s.find_audio_for_json(jpath, raw_audio_dir)
+            audio_path = w2s.find_audio_for_json(jpath, raw_audio_dirs)
             if audio_path is None:
                 continue
             # get annotations similar to wombat_to_spectrograms
@@ -102,7 +102,7 @@ def process_all_and_write_csv(raw_audio_dir: str, json_dir: str, out_csv: str, s
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(description='Extract end-frequency per annotation and write CSV')
-    parser.add_argument('--raw_audio_dir', required=True)
+    parser.add_argument('--raw_audio_dir', required=True, nargs='+')
     parser.add_argument('--json_dir', required=True)
     parser.add_argument('--out_csv', required=True)
     parser.add_argument('--species_key', default='label')

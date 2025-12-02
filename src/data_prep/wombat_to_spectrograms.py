@@ -17,31 +17,34 @@ def load_wombat_json(path: Path) -> Dict:
         return json.load(f)
 
 
-def find_audio_for_json(json_path: Path, raw_audio_dir: Path) -> Optional[Path]:
+def find_audio_for_json(json_path: Path, raw_audio_dirs: List[Path]) -> Optional[Path]:
     data = load_wombat_json(json_path)
     # common field containing recording path
     rec = None
     if isinstance(data, dict):
         rec = data.get('recording') or data.get('audio_file') or data.get('file')
+    
     if rec:
         p = Path(rec)
         if p.is_absolute() and p.exists():
             return p
-        # try relative to raw_audio_dir
-        candidate = raw_audio_dir / p.name
-        if candidate.exists():
-            return candidate
+        # try relative to any raw_audio_dir
+        for d in raw_audio_dirs:
+            candidate = d / p.name
+            if candidate.exists():
+                return candidate
 
     # fallback: match by stem name
     stem = json_path.stem
-    for ext in ('.wav', '.flac', '.mp3', '.m4a'):
-        cand = raw_audio_dir / (stem + ext)
-        if cand.exists():
-            return cand
-    # try scanning raw_audio_dir for a file containing the stem
-    for f in raw_audio_dir.glob('*'):
-        if stem in f.stem:
-            return f
+    for d in raw_audio_dirs:
+        for ext in ('.wav', '.flac', '.mp3', '.m4a'):
+            cand = d / (stem + ext)
+            if cand.exists():
+                return cand
+        # try scanning raw_audio_dir for a file containing the stem
+        for f in d.glob('*'):
+            if stem in f.stem:
+                return f
     return None
 
 
@@ -110,8 +113,8 @@ def process_audio_file(audio_path: Path, annotations: Iterable[Dict], out_base: 
         save_spectrogram_image(S_db, out_path)
 
 
-def process_all(raw_audio_dir: str, json_dir: str, out_dir: str, species_key: str = 'label') -> None:
-    raw_audio_dir = Path(raw_audio_dir)
+def process_all(raw_audio_dirs: List[str], json_dir: str, out_dir: str, species_key: str = 'label') -> None:
+    raw_audio_dirs = [Path(d) for d in raw_audio_dirs]
     json_dir = Path(json_dir)
     out_base = Path(out_dir)
     ensure_dir(out_base)
@@ -121,7 +124,7 @@ def process_all(raw_audio_dir: str, json_dir: str, out_dir: str, species_key: st
             data = load_wombat_json(jpath)
         except Exception:
             continue
-        audio_path = find_audio_for_json(jpath, raw_audio_dir)
+        audio_path = find_audio_for_json(jpath, raw_audio_dirs)
         if audio_path is None:
             # skip if we can't find the audio
             continue
@@ -148,7 +151,7 @@ if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser(description='Convert Wombat JSON annotations + audio -> spectrogram PNGs')
-    parser.add_argument('--raw_audio_dir', required=True, help='directory with raw audio files')
+    parser.add_argument('--raw_audio_dir', required=True, nargs='+', help='directory with raw audio files')
     parser.add_argument('--json_dir', required=True, help='directory with Wombat JSON exports')
     parser.add_argument('--out_dir', required=True, help='output directory for spectrograms')
     parser.add_argument('--species_key', default='label', help='JSON key for species label')
