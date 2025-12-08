@@ -1,0 +1,574 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "2d49ab99",
+   "metadata": {
+    "papermill": {
+     "duration": 0.002208,
+     "end_time": "2025-12-08T14:08:57.466383",
+     "exception": false,
+     "start_time": "2025-12-08T14:08:57.464175",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "# Kaggle Training Pipeline for IndianBatsModel\n",
+    "\n",
+    "This notebook trains the Bat Species Classifier using code from the [IndianBatsModel repository](https://github.com/Quarkisinproton/IndianBatsModel).\n",
+    "\n",
+    "**Steps:**\n",
+    "1.  Clone the repository.\n",
+    "2.  Install dependencies.\n",
+    "3.  Import functions directly from the codebase.\n",
+    "4.  Run the data preparation and training pipeline.\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "0577d62d",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-12-08T14:08:57.470832Z",
+     "iopub.status.busy": "2025-12-08T14:08:57.470608Z",
+     "iopub.status.idle": "2025-12-08T14:09:04.072232Z",
+     "shell.execute_reply": "2025-12-08T14:09:04.071213Z"
+    },
+    "papermill": {
+     "duration": 6.605297,
+     "end_time": "2025-12-08T14:09:04.073660",
+     "exception": false,
+     "start_time": "2025-12-08T14:08:57.468363",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Cloning into 'IndianBatsModel'...\r\n",
+      "remote: Enumerating objects: 187, done.\u001b[K\r\n",
+      "remote: Counting objects: 100% (187/187), done.\u001b[K\r\n",
+      "remote: Compressing objects: 100% (82/82), done.\u001b[K\r\n",
+      "remote: Total 187 (delta 97), reused 182 (delta 92), pack-reused 0 (from 0)\u001b[K\r\n",
+      "Receiving objects: 100% (187/187), 48.22 KiB | 6.03 MiB/s, done.\r\n",
+      "Resolving deltas: 100% (97/97), done.\r\n",
+      "Requirement already satisfied: librosa in /usr/local/lib/python3.11/dist-packages (0.11.0)\r\n",
+      "Requirement already satisfied: pyyaml in /usr/local/lib/python3.11/dist-packages (6.0.3)\r\n",
+      "Requirement already satisfied: pandas in /usr/local/lib/python3.11/dist-packages (2.2.3)\r\n",
+      "Requirement already satisfied: matplotlib in /usr/local/lib/python3.11/dist-packages (3.7.2)\r\n",
+      "Requirement already satisfied: audioread>=2.1.9 in /usr/local/lib/python3.11/dist-packages (from librosa) (3.0.1)\r\n",
+      "Requirement already satisfied: numba>=0.51.0 in /usr/local/lib/python3.11/dist-packages (from librosa) (0.60.0)\r\n",
+      "Requirement already satisfied: numpy>=1.22.3 in /usr/local/lib/python3.11/dist-packages (from librosa) (1.26.4)\r\n",
+      "Requirement already satisfied: scipy>=1.6.0 in /usr/local/lib/python3.11/dist-packages (from librosa) (1.15.3)\r\n",
+      "Requirement already satisfied: scikit-learn>=1.1.0 in /usr/local/lib/python3.11/dist-packages (from librosa) (1.2.2)\r\n",
+      "Requirement already satisfied: joblib>=1.0 in /usr/local/lib/python3.11/dist-packages (from librosa) (1.5.2)\r\n",
+      "Requirement already satisfied: decorator>=4.3.0 in /usr/local/lib/python3.11/dist-packages (from librosa) (4.4.2)\r\n",
+      "Requirement already satisfied: soundfile>=0.12.1 in /usr/local/lib/python3.11/dist-packages (from librosa) (0.13.1)\r\n",
+      "Requirement already satisfied: pooch>=1.1 in /usr/local/lib/python3.11/dist-packages (from librosa) (1.8.2)\r\n",
+      "Requirement already satisfied: soxr>=0.3.2 in /usr/local/lib/python3.11/dist-packages (from librosa) (0.5.0.post1)\r\n",
+      "Requirement already satisfied: typing_extensions>=4.1.1 in /usr/local/lib/python3.11/dist-packages (from librosa) (4.15.0)\r\n",
+      "Requirement already satisfied: lazy_loader>=0.1 in /usr/local/lib/python3.11/dist-packages (from librosa) (0.4)\r\n",
+      "Requirement already satisfied: msgpack>=1.0 in /usr/local/lib/python3.11/dist-packages (from librosa) (1.1.2)\r\n",
+      "Requirement already satisfied: python-dateutil>=2.8.2 in /usr/local/lib/python3.11/dist-packages (from pandas) (2.9.0.post0)\r\n",
+      "Requirement already satisfied: pytz>=2020.1 in /usr/local/lib/python3.11/dist-packages (from pandas) (2025.2)\r\n",
+      "Requirement already satisfied: tzdata>=2022.7 in /usr/local/lib/python3.11/dist-packages (from pandas) (2025.2)\r\n",
+      "Requirement already satisfied: contourpy>=1.0.1 in /usr/local/lib/python3.11/dist-packages (from matplotlib) (1.3.2)\r\n",
+      "Requirement already satisfied: cycler>=0.10 in /usr/local/lib/python3.11/dist-packages (from matplotlib) (0.12.1)\r\n",
+      "Requirement already satisfied: fonttools>=4.22.0 in /usr/local/lib/python3.11/dist-packages (from matplotlib) (4.59.0)\r\n",
+      "Requirement already satisfied: kiwisolver>=1.0.1 in /usr/local/lib/python3.11/dist-packages (from matplotlib) (1.4.8)\r\n",
+      "Requirement already satisfied: packaging>=20.0 in /usr/local/lib/python3.11/dist-packages (from matplotlib) (25.0)\r\n",
+      "Requirement already satisfied: pillow>=6.2.0 in /usr/local/lib/python3.11/dist-packages (from matplotlib) (11.3.0)\r\n",
+      "Requirement already satisfied: pyparsing<3.1,>=2.3.1 in /usr/local/lib/python3.11/dist-packages (from matplotlib) (3.0.9)\r\n",
+      "Requirement already satisfied: llvmlite<0.44,>=0.43.0dev0 in /usr/local/lib/python3.11/dist-packages (from numba>=0.51.0->librosa) (0.43.0)\r\n",
+      "Requirement already satisfied: mkl_fft in /usr/local/lib/python3.11/dist-packages (from numpy>=1.22.3->librosa) (1.3.8)\r\n",
+      "Requirement already satisfied: mkl_random in /usr/local/lib/python3.11/dist-packages (from numpy>=1.22.3->librosa) (1.2.4)\r\n",
+      "Requirement already satisfied: mkl_umath in /usr/local/lib/python3.11/dist-packages (from numpy>=1.22.3->librosa) (0.1.1)\r\n",
+      "Requirement already satisfied: mkl in /usr/local/lib/python3.11/dist-packages (from numpy>=1.22.3->librosa) (2025.3.0)\r\n",
+      "Requirement already satisfied: tbb4py in /usr/local/lib/python3.11/dist-packages (from numpy>=1.22.3->librosa) (2022.3.0)\r\n",
+      "Requirement already satisfied: mkl-service in /usr/local/lib/python3.11/dist-packages (from numpy>=1.22.3->librosa) (2.4.1)\r\n",
+      "Requirement already satisfied: platformdirs>=2.5.0 in /usr/local/lib/python3.11/dist-packages (from pooch>=1.1->librosa) (4.5.0)\r\n",
+      "Requirement already satisfied: requests>=2.19.0 in /usr/local/lib/python3.11/dist-packages (from pooch>=1.1->librosa) (2.32.5)\r\n",
+      "Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.11/dist-packages (from python-dateutil>=2.8.2->pandas) (1.17.0)\r\n",
+      "Requirement already satisfied: threadpoolctl>=2.0.0 in /usr/local/lib/python3.11/dist-packages (from scikit-learn>=1.1.0->librosa) (3.6.0)\r\n",
+      "Requirement already satisfied: cffi>=1.0 in /usr/local/lib/python3.11/dist-packages (from soundfile>=0.12.1->librosa) (2.0.0)\r\n",
+      "Requirement already satisfied: pycparser in /usr/local/lib/python3.11/dist-packages (from cffi>=1.0->soundfile>=0.12.1->librosa) (2.23)\r\n",
+      "Requirement already satisfied: charset_normalizer<4,>=2 in /usr/local/lib/python3.11/dist-packages (from requests>=2.19.0->pooch>=1.1->librosa) (3.4.4)\r\n",
+      "Requirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.11/dist-packages (from requests>=2.19.0->pooch>=1.1->librosa) (3.11)\r\n",
+      "Requirement already satisfied: urllib3<3,>=1.21.1 in /usr/local/lib/python3.11/dist-packages (from requests>=2.19.0->pooch>=1.1->librosa) (2.5.0)\r\n",
+      "Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.11/dist-packages (from requests>=2.19.0->pooch>=1.1->librosa) (2025.10.5)\r\n",
+      "Requirement already satisfied: onemkl-license==2025.3.0 in /usr/local/lib/python3.11/dist-packages (from mkl->numpy>=1.22.3->librosa) (2025.3.0)\r\n",
+      "Requirement already satisfied: intel-openmp<2026,>=2024 in /usr/local/lib/python3.11/dist-packages (from mkl->numpy>=1.22.3->librosa) (2024.2.0)\r\n",
+      "Requirement already satisfied: tbb==2022.* in /usr/local/lib/python3.11/dist-packages (from mkl->numpy>=1.22.3->librosa) (2022.3.0)\r\n",
+      "Requirement already satisfied: tcmlib==1.* in /usr/local/lib/python3.11/dist-packages (from tbb==2022.*->mkl->numpy>=1.22.3->librosa) (1.4.0)\r\n",
+      "Requirement already satisfied: intel-cmplr-lib-rt in /usr/local/lib/python3.11/dist-packages (from mkl_umath->numpy>=1.22.3->librosa) (2024.2.0)\r\n",
+      "Requirement already satisfied: intel-cmplr-lib-ur==2024.2.0 in /usr/local/lib/python3.11/dist-packages (from intel-openmp<2026,>=2024->mkl->numpy>=1.22.3->librosa) (2024.2.0)\r\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 1. Setup Environment\n",
+    "# Clone the repository\n",
+    "!git clone https://github.com/Quarkisinproton/IndianBatsModel.git\n",
+    "\n",
+    "# Install dependencies\n",
+    "!pip install librosa pyyaml pandas matplotlib"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "0dfeb9c8",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-12-08T14:09:04.080003Z",
+     "iopub.status.busy": "2025-12-08T14:09:04.079379Z",
+     "iopub.status.idle": "2025-12-08T14:09:17.595600Z",
+     "shell.execute_reply": "2025-12-08T14:09:17.594822Z"
+    },
+    "papermill": {
+     "duration": 13.520589,
+     "end_time": "2025-12-08T14:09:17.596806",
+     "exception": false,
+     "start_time": "2025-12-08T14:09:04.076217",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Imports successful!\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 2. Import Modules\n",
+    "import sys\n",
+    "import os\n",
+    "from pathlib import Path\n",
+    "\n",
+    "# Add paths to sys.path to allow importing modules\n",
+    "REPO_DIR = '/kaggle/working/IndianBatsModel'\n",
+    "SRC_DIR = os.path.join(REPO_DIR, 'src')\n",
+    "\n",
+    "# Add both repo root (for 'src.data_prep' imports) and src (for 'datasets' imports)\n",
+    "if REPO_DIR not in sys.path:\n",
+    "    sys.path.append(REPO_DIR)\n",
+    "if SRC_DIR not in sys.path:\n",
+    "    sys.path.append(SRC_DIR)\n",
+    "\n",
+    "# Import project modules directly\n",
+    "try:\n",
+    "    from src.data_prep.generate_annotations import generate_annotations\n",
+    "    from src.data_prep.wombat_to_spectrograms import process_all as generate_spectrograms\n",
+    "    from src.data_prep.extract_end_frequency import process_all_and_write_csv as extract_features\n",
+    "    from src.train import train_model\n",
+    "    print(\"Imports successful!\")\n",
+    "except ImportError as e:\n",
+    "    print(f\"Import Error: {e}\")\n",
+    "    # Fallback: Try importing without 'src.' prefix if path setup behaves differently\n",
+    "    from data_prep.generate_annotations import generate_annotations\n",
+    "    from data_prep.wombat_to_spectrograms import process_all as generate_spectrograms\n",
+    "    from data_prep.extract_end_frequency import process_all_and_write_csv as extract_features\n",
+    "    from train import train_model\n",
+    "    print(\"Imports successful (fallback)!\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "4b60b65b",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-12-08T14:09:17.603302Z",
+     "iopub.status.busy": "2025-12-08T14:09:17.602622Z",
+     "iopub.status.idle": "2025-12-08T14:09:17.608147Z",
+     "shell.execute_reply": "2025-12-08T14:09:17.607560Z"
+    },
+    "papermill": {
+     "duration": 0.009733,
+     "end_time": "2025-12-08T14:09:17.609107",
+     "exception": false,
+     "start_time": "2025-12-08T14:09:17.599374",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Configuration set.\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 3. Configuration\n",
+    "WORK_DIR = '/kaggle/working'\n",
+    "\n",
+    "# Input Data Paths (Adjust these to match your Kaggle Dataset structure)\n",
+    "RAW_AUDIO_DIRS = [\n",
+    "    '/kaggle/input/pip-ceylonicusbat-species',\n",
+    "    '/kaggle/input/pip-tenuisbat-species'\n",
+    "]\n",
+    "\n",
+    "# Output Paths\n",
+    "JSON_DIR = os.path.join(WORK_DIR, 'data/annotations_json_folder')\n",
+    "SPECT_OUT = os.path.join(WORK_DIR, 'data/processed/spectrograms')\n",
+    "FEATURES_OUT = os.path.join(WORK_DIR, 'data/processed/features')\n",
+    "FEATURES_CSV = os.path.join(FEATURES_OUT, 'end_frequencies.csv')\n",
+    "MODEL_SAVE_PATH = os.path.join(WORK_DIR, 'models', 'bat_fused_best.pth')\n",
+    "\n",
+    "# Ensure directories exist\n",
+    "Path(FEATURES_OUT).mkdir(parents=True, exist_ok=True)\n",
+    "Path(os.path.dirname(MODEL_SAVE_PATH)).mkdir(parents=True, exist_ok=True)\n",
+    "\n",
+    "print(\"Configuration set.\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "d08220f2",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-12-08T14:09:17.614769Z",
+     "iopub.status.busy": "2025-12-08T14:09:17.614336Z",
+     "iopub.status.idle": "2025-12-08T14:09:23.617897Z",
+     "shell.execute_reply": "2025-12-08T14:09:23.617189Z"
+    },
+    "papermill": {
+     "duration": 6.007658,
+     "end_time": "2025-12-08T14:09:23.619049",
+     "exception": false,
+     "start_time": "2025-12-08T14:09:17.611391",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Generating Annotations...\n",
+      "Generating annotations for 2 directories...\n",
+      "Output directory: /kaggle/working/data/annotations_json_folder\n",
+      "Label strategy: folder\n",
+      "Found 25 audio files in /kaggle/input/pip-ceylonicusbat-species\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "Processing pip-ceylonicusbat-species: 100%|██████████| 25/25 [00:05<00:00,  4.31it/s]\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 22 audio files in /kaggle/input/pip-tenuisbat-species\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "Processing pip-tenuisbat-species: 100%|██████████| 22/22 [00:00<00:00, 184.72it/s]"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Done.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 4. Generate Annotations\n",
+    "print(\"Generating Annotations...\")\n",
+    "generate_annotations(\n",
+    "    raw_audio_dirs=RAW_AUDIO_DIRS,\n",
+    "    output_dir=JSON_DIR,\n",
+    "    label_strategy='folder'\n",
+    ")\n",
+    "print(\"Done.\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "b7e22ce0",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-12-08T14:09:23.626058Z",
+     "iopub.status.busy": "2025-12-08T14:09:23.625712Z",
+     "iopub.status.idle": "2025-12-08T14:09:49.009161Z",
+     "shell.execute_reply": "2025-12-08T14:09:49.008302Z"
+    },
+    "papermill": {
+     "duration": 25.38833,
+     "end_time": "2025-12-08T14:09:49.010413",
+     "exception": false,
+     "start_time": "2025-12-08T14:09:23.622083",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Generating Spectrograms...\n",
+      "Scanning for JSONs in /kaggle/working/data/annotations_json_folder...\n",
+      "Found 47 JSON files.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "Processing JSONs:   0%|          | 0/47 [00:00<?, ?it/s]/usr/local/lib/python3.11/dist-packages/librosa/feature/spectral.py:2148: UserWarning: Empty filters detected in mel frequency basis. Some channels will produce empty responses. Try increasing your sampling rate (and fmax) or reducing n_mels.\n",
+      "  mel_basis = filters.mel(sr=sr, n_fft=n_fft, **kwargs)\n",
+      "Processing JSONs: 100%|██████████| 47/47 [00:25<00:00,  1.85it/s]"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Processed 47 files successfully.\n",
+      "Checking output directory: /kaggle/working/data/processed/spectrograms\n",
+      "Found 2 species folders: ['pip-ceylonicusbat-species', 'pip-tenuisbat-species']\n",
+      "Total spectrogram images found: 47\n",
+      "Done.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 5. Generate Spectrograms\n",
+    "print(\"Generating Spectrograms...\")\n",
+    "generate_spectrograms(\n",
+    "    raw_audio_dirs=RAW_AUDIO_DIRS,\n",
+    "    json_dir=JSON_DIR,\n",
+    "    out_dir=SPECT_OUT,\n",
+    "    species_key='label'\n",
+    ")\n",
+    "print(\"Done.\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "bcfd49d5",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-12-08T14:09:49.021315Z",
+     "iopub.status.busy": "2025-12-08T14:09:49.020827Z",
+     "iopub.status.idle": "2025-12-08T14:09:54.067614Z",
+     "shell.execute_reply": "2025-12-08T14:09:54.066917Z"
+    },
+    "papermill": {
+     "duration": 5.053256,
+     "end_time": "2025-12-08T14:09:54.068801",
+     "exception": false,
+     "start_time": "2025-12-08T14:09:49.015545",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Extracting Features...\n",
+      "Features saved to /kaggle/working/data/processed/features/end_frequencies.csv\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 6. Extract Features\n",
+    "print(\"Extracting Features...\")\n",
+    "extract_features(\n",
+    "    raw_audio_dirs=RAW_AUDIO_DIRS,\n",
+    "    json_dir=JSON_DIR,\n",
+    "    out_csv=FEATURES_CSV,\n",
+    "    species_key='label'\n",
+    ")\n",
+    "print(f\"Features saved to {FEATURES_CSV}\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "159678c6",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-12-08T14:09:54.082373Z",
+     "iopub.status.busy": "2025-12-08T14:09:54.082110Z",
+     "iopub.status.idle": "2025-12-08T14:10:04.537852Z",
+     "shell.execute_reply": "2025-12-08T14:10:04.536974Z"
+    },
+    "papermill": {
+     "duration": 10.463693,
+     "end_time": "2025-12-08T14:10:04.539033",
+     "exception": false,
+     "start_time": "2025-12-08T14:09:54.075340",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Starting Training...\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.\n",
+      "  warnings.warn(\n",
+      "/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.\n",
+      "  warnings.warn(msg)\n",
+      "Downloading: \"https://download.pytorch.org/models/resnet18-f37072fd.pth\" to /root/.cache/torch/hub/checkpoints/resnet18-f37072fd.pth\n",
+      "100%|██████████| 44.7M/44.7M [00:00<00:00, 199MB/s]\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Epoch [1/20], Loss: 41.7759\n",
+      "Epoch [2/20], Loss: 28.7369\n",
+      "Epoch [3/20], Loss: 40.6784\n",
+      "Epoch [4/20], Loss: 29.4056\n",
+      "Epoch [5/20], Loss: 12.8200\n",
+      "Epoch [6/20], Loss: 16.5304\n",
+      "Epoch [7/20], Loss: 23.3158\n",
+      "Epoch [8/20], Loss: 16.6397\n",
+      "Epoch [9/20], Loss: 21.2843\n",
+      "Epoch [10/20], Loss: 21.3757\n",
+      "Epoch [11/20], Loss: 19.4256\n",
+      "Epoch [12/20], Loss: 18.4238\n",
+      "Epoch [13/20], Loss: 11.1140\n",
+      "Epoch [14/20], Loss: 11.0788\n",
+      "Epoch [15/20], Loss: 13.3486\n",
+      "Epoch [16/20], Loss: 9.8230\n",
+      "Epoch [17/20], Loss: 17.6344\n",
+      "Epoch [18/20], Loss: 12.9029\n",
+      "Epoch [19/20], Loss: 11.2573\n",
+      "Epoch [20/20], Loss: 26.8699\n",
+      "Saved model to /kaggle/working/models/bat_fused_best.pth\n",
+      "Training Complete! Model saved to /kaggle/working/models/bat_fused_best.pth\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 7. Run Training\n",
+    "# Define Training Configuration Dictionary\n",
+    "config = {\n",
+    "    'data': {\n",
+    "        'train_spectrograms': SPECT_OUT,\n",
+    "        'features_csv': FEATURES_CSV,\n",
+    "        'num_classes': 3\n",
+    "    },\n",
+    "    'training': {\n",
+    "        'batch_size': 8,\n",
+    "        'learning_rate': 1e-4,\n",
+    "        'num_epochs': 20,\n",
+    "        'model_save_path': MODEL_SAVE_PATH,\n",
+    "        'num_workers': 4\n",
+    "    }\n",
+    "}\n",
+    "\n",
+    "print(\"Starting Training...\")\n",
+    "train_model(config)\n",
+    "print(f\"Training Complete! Model saved to {MODEL_SAVE_PATH}\")"
+   ]
+  }
+ ],
+ "metadata": {
+  "kaggle": {
+   "accelerator": "nvidiaTeslaT4",
+   "dataSources": [
+    {
+     "datasetId": 8811467,
+     "sourceId": 13835459,
+     "sourceType": "datasetVersion"
+    },
+    {
+     "datasetId": 8811486,
+     "sourceId": 13835480,
+     "sourceType": "datasetVersion"
+    }
+   ],
+   "dockerImageVersionId": 31193,
+   "isGpuEnabled": true,
+   "isInternetEnabled": true,
+   "language": "python",
+   "sourceType": "notebook"
+  },
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.13"
+  },
+  "papermill": {
+   "default_parameters": {},
+   "duration": 74.529292,
+   "end_time": "2025-12-08T14:10:07.096009",
+   "environment_variables": {},
+   "exception": null,
+   "input_path": "__notebook__.ipynb",
+   "output_path": "__notebook__.ipynb",
+   "parameters": {},
+   "start_time": "2025-12-08T14:08:52.566717",
+   "version": "2.6.0"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
