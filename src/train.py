@@ -33,6 +33,15 @@ def train_model(config):
         train_dataset = SpectrogramDataset(train_dir)
         use_features = False
 
+    if len(train_dataset) == 0:
+        print(f"CRITICAL ERROR: Training dataset is empty.")
+        print(f"Checked directory: {train_dir}")
+        print("Possible reasons:")
+        print("1. Spectrogram generation failed (check previous steps).")
+        print("2. Input audio directories are empty or incorrect.")
+        print("3. No images found in the spectrogram directory.")
+        raise ValueError("Dataset is empty. Cannot proceed with training.")
+
     # build a weighted sampler to help with class imbalance when possible
     try:
         if use_features:
