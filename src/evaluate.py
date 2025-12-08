@@ -4,11 +4,11 @@ import yaml
 import json
 import numpy as np
 from torch.utils.data import DataLoader
-from datasets.spectrogram_dataset import SpectrogramDataset
-from datasets.spectrogram_with_features_dataset import SpectrogramWithFeaturesDataset
-from models.cnn import CNN
-from models.cnn_with_features import CNNWithFeatures
-from utils import load_model
+from src.datasets.spectrogram_dataset import SpectrogramDataset
+from src.datasets.spectrogram_with_features_dataset import SpectrogramWithFeaturesDataset
+from src.models.cnn import CNN
+from src.models.cnn_with_features import CNNWithFeatures
+from src.utils import load_model
 
 def evaluate_model(config_path):
     # Load configuration

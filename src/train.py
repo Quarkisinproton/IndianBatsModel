@@ -3,11 +3,11 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
-from datasets.spectrogram_dataset import SpectrogramDataset
-from datasets.spectrogram_with_features_dataset import SpectrogramWithFeaturesDataset
-from models.cnn import CNN
-from models.cnn_with_features import CNNWithFeatures
-from utils import save_model
+from src.datasets.spectrogram_dataset import SpectrogramDataset
+from src.datasets.spectrogram_with_features_dataset import SpectrogramWithFeaturesDataset
+from src.models.cnn import CNN
+from src.models.cnn_with_features import CNNWithFeatures
+from src.utils import save_model
 import yaml
 import numpy as np
 import json
