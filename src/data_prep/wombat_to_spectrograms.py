@@ -86,31 +86,45 @@ def normalize_annotations(raw_anns) -> List[Dict]:
 
 
 def process_audio_file(audio_path: Path, annotations: Iterable[Dict], out_base: Path, species_key: str = 'label') -> None:
-    y, sr = librosa.load(str(audio_path), sr=None)
+    try:
+        y, sr = librosa.load(str(audio_path), sr=None)
+    except Exception as e:
+        print(f"Error loading audio {audio_path}: {e}")
+        return
+
     for i, ann in enumerate(annotations):
         # common field names
         start = ann.get('start_time') or ann.get('start') or ann.get('t0') or ann.get('onset')
         end = ann.get('end_time') or ann.get('end') or ann.get('t1') or ann.get('offset')
         label = ann.get(species_key) or ann.get('species') or ann.get('label') or ann.get('class')
+        
         if start is None or end is None or label is None:
-            # try flexible keys
-            # skip if insufficient data
+            print(f"Skipping annotation {i} in {audio_path.name}: Missing data (start={start}, end={end}, label={label})")
             continue
         try:
             start_f = float(start)
             end_f = float(end)
         except Exception:
+            print(f"Skipping annotation {i}: Invalid time format")
             continue
+            
         seg = extract_segment(y, sr, start_f, end_f)
         if seg.size == 0:
+            print(f"Skipping annotation {i}: Empty segment")
             continue
+            
         S_db = make_mel_spectrogram(seg, sr)
         safe_label = str(label).strip().replace(' ', '_')
         out_dir = out_base / safe_label
         ensure_dir(out_dir)
         out_name = f"{audio_path.stem}_{i}.png"
         out_path = out_dir / out_name
-        save_spectrogram_image(S_db, out_path)
+        
+        try:
+            save_spectrogram_image(S_db, out_path)
+            # print(f"Saved {out_path}") # Commented out to avoid spam, but useful for deep debug
+        except Exception as e:
+            print(f"Error saving spectrogram to {out_path}: {e}")
 
 
 def process_all(raw_audio_dirs: List[str], json_dir: str, out_dir: str, species_key: str = 'label') -> None:
@@ -170,6 +184,16 @@ def process_all(raw_audio_dirs: List[str], json_dir: str, out_dir: str, species_
         processed_count += 1
     
     print(f"Processed {processed_count} files successfully.")
+    
+    # Debug: List output directory contents
+    print(f"Checking output directory: {out_base}")
+    if out_base.exists():
+        subdirs = [d.name for d in out_base.iterdir() if d.is_dir()]
+        print(f"Found {len(subdirs)} species folders: {subdirs}")
+        total_files = sum(len(list(d.glob('*.png'))) for d in out_base.iterdir() if d.is_dir())
+        print(f"Total spectrogram images found: {total_files}")
+    else:
+        print("CRITICAL: Output directory does not exist!")
 
 
 if __name__ == '__main__':
