@@ -2,13 +2,13 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "id": "2d49ab99",
+   "id": "0b22a65f",
    "metadata": {
     "papermill": {
-     "duration": 0.002208,
-     "end_time": "2025-12-08T14:08:57.466383",
+     "duration": 0.00327,
+     "end_time": "2025-12-08T14:15:25.634017",
      "exception": false,
-     "start_time": "2025-12-08T14:08:57.464175",
+     "start_time": "2025-12-08T14:15:25.630747",
      "status": "completed"
     },
     "tags": []
@@ -28,19 +28,19 @@
   {
    "cell_type": "code",
    "execution_count": 1,
-   "id": "0577d62d",
+   "id": "3c74cf50",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-08T14:08:57.470832Z",
-     "iopub.status.busy": "2025-12-08T14:08:57.470608Z",
-     "iopub.status.idle": "2025-12-08T14:09:04.072232Z",
-     "shell.execute_reply": "2025-12-08T14:09:04.071213Z"
+     "iopub.execute_input": "2025-12-08T14:15:25.638220Z",
+     "iopub.status.busy": "2025-12-08T14:15:25.638021Z",
+     "iopub.status.idle": "2025-12-08T14:15:32.214359Z",
+     "shell.execute_reply": "2025-12-08T14:15:32.213557Z"
     },
     "papermill": {
-     "duration": 6.605297,
-     "end_time": "2025-12-08T14:09:04.073660",
+     "duration": 6.580033,
+     "end_time": "2025-12-08T14:15:32.215915",
      "exception": false,
-     "start_time": "2025-12-08T14:08:57.468363",
+     "start_time": "2025-12-08T14:15:25.635882",
      "status": "completed"
     },
     "tags": []
@@ -51,12 +51,12 @@
      "output_type": "stream",
      "text": [
       "Cloning into 'IndianBatsModel'...\r\n",
-      "remote: Enumerating objects: 187, done.\u001b[K\r\n",
-      "remote: Counting objects: 100% (187/187), done.\u001b[K\r\n",
-      "remote: Compressing objects: 100% (82/82), done.\u001b[K\r\n",
-      "remote: Total 187 (delta 97), reused 182 (delta 92), pack-reused 0 (from 0)\u001b[K\r\n",
-      "Receiving objects: 100% (187/187), 48.22 KiB | 6.03 MiB/s, done.\r\n",
-      "Resolving deltas: 100% (97/97), done.\r\n",
+      "remote: Enumerating objects: 190, done.\u001b[K\r\n",
+      "remote: Counting objects: 100% (190/190), done.\u001b[K\r\n",
+      "remote: Compressing objects: 100% (85/85), done.\u001b[K\r\n",
+      "remote: Total 190 (delta 98), reused 181 (delta 92), pack-reused 0 (from 0)\u001b[K\r\n",
+      "Receiving objects: 100% (190/190), 53.24 KiB | 2.80 MiB/s, done.\r\n",
+      "Resolving deltas: 100% (98/98), done.\r\n",
       "Requirement already satisfied: librosa in /usr/local/lib/python3.11/dist-packages (0.11.0)\r\n",
       "Requirement already satisfied: pyyaml in /usr/local/lib/python3.11/dist-packages (6.0.3)\r\n",
       "Requirement already satisfied: pandas in /usr/local/lib/python3.11/dist-packages (2.2.3)\r\n",
@@ -122,19 +122,19 @@
   {
    "cell_type": "code",
    "execution_count": 2,
-   "id": "0dfeb9c8",
+   "id": "d7173ad3",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-08T14:09:04.080003Z",
-     "iopub.status.busy": "2025-12-08T14:09:04.079379Z",
-     "iopub.status.idle": "2025-12-08T14:09:17.595600Z",
-     "shell.execute_reply": "2025-12-08T14:09:17.594822Z"
+     "iopub.execute_input": "2025-12-08T14:15:32.222645Z",
+     "iopub.status.busy": "2025-12-08T14:15:32.222169Z",
+     "iopub.status.idle": "2025-12-08T14:15:46.518507Z",
+     "shell.execute_reply": "2025-12-08T14:15:46.517743Z"
     },
     "papermill": {
-     "duration": 13.520589,
-     "end_time": "2025-12-08T14:09:17.596806",
+     "duration": 14.300887,
+     "end_time": "2025-12-08T14:15:46.519695",
      "exception": false,
-     "start_time": "2025-12-08T14:09:04.076217",
+     "start_time": "2025-12-08T14:15:32.218808",
      "status": "completed"
     },
     "tags": []
@@ -184,19 +184,19 @@
   {
    "cell_type": "code",
    "execution_count": 3,
-   "id": "4b60b65b",
+   "id": "a2cd414f",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-08T14:09:17.603302Z",
-     "iopub.status.busy": "2025-12-08T14:09:17.602622Z",
-     "iopub.status.idle": "2025-12-08T14:09:17.608147Z",
-     "shell.execute_reply": "2025-12-08T14:09:17.607560Z"
+     "iopub.execute_input": "2025-12-08T14:15:46.525520Z",
+     "iopub.status.busy": "2025-12-08T14:15:46.525202Z",
+     "iopub.status.idle": "2025-12-08T14:15:46.531183Z",
+     "shell.execute_reply": "2025-12-08T14:15:46.530558Z"
     },
     "papermill": {
-     "duration": 0.009733,
-     "end_time": "2025-12-08T14:09:17.609107",
+     "duration": 0.010055,
+     "end_time": "2025-12-08T14:15:46.532213",
      "exception": false,
-     "start_time": "2025-12-08T14:09:17.599374",
+     "start_time": "2025-12-08T14:15:46.522158",
      "status": "completed"
     },
     "tags": []
@@ -237,19 +237,19 @@
   {
    "cell_type": "code",
    "execution_count": 4,
-   "id": "d08220f2",
+   "id": "c4c9794e",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-08T14:09:17.614769Z",
-     "iopub.status.busy": "2025-12-08T14:09:17.614336Z",
-     "iopub.status.idle": "2025-12-08T14:09:23.617897Z",
-     "shell.execute_reply": "2025-12-08T14:09:23.617189Z"
+     "iopub.execute_input": "2025-12-08T14:15:46.537882Z",
+     "iopub.status.busy": "2025-12-08T14:15:46.537276Z",
+     "iopub.status.idle": "2025-12-08T14:15:53.180664Z",
+     "shell.execute_reply": "2025-12-08T14:15:53.179932Z"
     },
     "papermill": {
-     "duration": 6.007658,
-     "end_time": "2025-12-08T14:09:23.619049",
+     "duration": 6.647381,
+     "end_time": "2025-12-08T14:15:53.181890",
      "exception": false,
-     "start_time": "2025-12-08T14:09:17.611391",
+     "start_time": "2025-12-08T14:15:46.534509",
      "status": "completed"
     },
     "tags": []
@@ -270,7 +270,7 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "Processing pip-ceylonicusbat-species: 100%|██████████| 25/25 [00:05<00:00,  4.31it/s]\n"
+      "Processing pip-ceylonicusbat-species: 100%|██████████| 25/25 [00:06<00:00,  3.86it/s]\n"
      ]
     },
     {
@@ -284,7 +284,7 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "Processing pip-tenuisbat-species: 100%|██████████| 22/22 [00:00<00:00, 184.72it/s]"
+      "Processing pip-tenuisbat-species: 100%|██████████| 22/22 [00:00<00:00, 207.76it/s]"
      ]
     },
     {
@@ -316,19 +316,19 @@
   {
    "cell_type": "code",
    "execution_count": 5,
-   "id": "b7e22ce0",
+   "id": "3a0247d9",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-08T14:09:23.626058Z",
-     "iopub.status.busy": "2025-12-08T14:09:23.625712Z",
-     "iopub.status.idle": "2025-12-08T14:09:49.009161Z",
-     "shell.execute_reply": "2025-12-08T14:09:49.008302Z"
+     "iopub.execute_input": "2025-12-08T14:15:53.188742Z",
+     "iopub.status.busy": "2025-12-08T14:15:53.188404Z",
+     "iopub.status.idle": "2025-12-08T14:16:18.977863Z",
+     "shell.execute_reply": "2025-12-08T14:16:18.976981Z"
     },
     "papermill": {
-     "duration": 25.38833,
-     "end_time": "2025-12-08T14:09:49.010413",
+     "duration": 25.794257,
+     "end_time": "2025-12-08T14:16:18.979148",
      "exception": false,
-     "start_time": "2025-12-08T14:09:23.622083",
+     "start_time": "2025-12-08T14:15:53.184891",
      "status": "completed"
     },
     "tags": []
@@ -349,7 +349,7 @@
      "text": [
       "Processing JSONs:   0%|          | 0/47 [00:00<?, ?it/s]/usr/local/lib/python3.11/dist-packages/librosa/feature/spectral.py:2148: UserWarning: Empty filters detected in mel frequency basis. Some channels will produce empty responses. Try increasing your sampling rate (and fmax) or reducing n_mels.\n",
       "  mel_basis = filters.mel(sr=sr, n_fft=n_fft, **kwargs)\n",
-      "Processing JSONs: 100%|██████████| 47/47 [00:25<00:00,  1.85it/s]"
+      "Processing JSONs: 100%|██████████| 47/47 [00:25<00:00,  1.82it/s]"
      ]
     },
     {
@@ -358,7 +358,7 @@
      "text": [
       "Processed 47 files successfully.\n",
       "Checking output directory: /kaggle/working/data/processed/spectrograms\n",
-      "Found 2 species folders: ['pip-ceylonicusbat-species', 'pip-tenuisbat-species']\n",
+      "Found 2 species folders: ['pip-tenuisbat-species', 'pip-ceylonicusbat-species']\n",
       "Total spectrogram images found: 47\n",
       "Done.\n"
      ]
@@ -386,19 +386,19 @@
   {
    "cell_type": "code",
    "execution_count": 6,
-   "id": "bcfd49d5",
+   "id": "c0a0d93f",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-08T14:09:49.021315Z",
-     "iopub.status.busy": "2025-12-08T14:09:49.020827Z",
-     "iopub.status.idle": "2025-12-08T14:09:54.067614Z",
-     "shell.execute_reply": "2025-12-08T14:09:54.066917Z"
+     "iopub.execute_input": "2025-12-08T14:16:18.990246Z",
+     "iopub.status.busy": "2025-12-08T14:16:18.989665Z",
+     "iopub.status.idle": "2025-12-08T14:16:24.061186Z",
+     "shell.execute_reply": "2025-12-08T14:16:24.060292Z"
     },
     "papermill": {
-     "duration": 5.053256,
-     "end_time": "2025-12-08T14:09:54.068801",
+     "duration": 5.078146,
+     "end_time": "2025-12-08T14:16:24.062393",
      "exception": false,
-     "start_time": "2025-12-08T14:09:49.015545",
+     "start_time": "2025-12-08T14:16:18.984247",
      "status": "completed"
     },
     "tags": []
@@ -428,19 +428,19 @@
   {
    "cell_type": "code",
    "execution_count": 7,
-   "id": "159678c6",
+   "id": "b660e6b2",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-08T14:09:54.082373Z",
-     "iopub.status.busy": "2025-12-08T14:09:54.082110Z",
-     "iopub.status.idle": "2025-12-08T14:10:04.537852Z",
-     "shell.execute_reply": "2025-12-08T14:10:04.536974Z"
+     "iopub.execute_input": "2025-12-08T14:16:24.073325Z",
+     "iopub.status.busy": "2025-12-08T14:16:24.073088Z",
+     "iopub.status.idle": "2025-12-08T14:16:34.989149Z",
+     "shell.execute_reply": "2025-12-08T14:16:34.987918Z"
     },
     "papermill": {
-     "duration": 10.463693,
-     "end_time": "2025-12-08T14:10:04.539033",
+     "duration": 10.9231,
+     "end_time": "2025-12-08T14:16:34.990527",
      "exception": false,
-     "start_time": "2025-12-08T14:09:54.075340",
+     "start_time": "2025-12-08T14:16:24.067427",
      "status": "completed"
     },
     "tags": []
@@ -462,33 +462,33 @@
       "/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.\n",
       "  warnings.warn(msg)\n",
       "Downloading: \"https://download.pytorch.org/models/resnet18-f37072fd.pth\" to /root/.cache/torch/hub/checkpoints/resnet18-f37072fd.pth\n",
-      "100%|██████████| 44.7M/44.7M [00:00<00:00, 199MB/s]\n"
+      "100%|██████████| 44.7M/44.7M [00:00<00:00, 136MB/s]\n"
      ]
     },
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "Epoch [1/20], Loss: 41.7759\n",
-      "Epoch [2/20], Loss: 28.7369\n",
-      "Epoch [3/20], Loss: 40.6784\n",
-      "Epoch [4/20], Loss: 29.4056\n",
-      "Epoch [5/20], Loss: 12.8200\n",
-      "Epoch [6/20], Loss: 16.5304\n",
-      "Epoch [7/20], Loss: 23.3158\n",
-      "Epoch [8/20], Loss: 16.6397\n",
-      "Epoch [9/20], Loss: 21.2843\n",
-      "Epoch [10/20], Loss: 21.3757\n",
-      "Epoch [11/20], Loss: 19.4256\n",
-      "Epoch [12/20], Loss: 18.4238\n",
-      "Epoch [13/20], Loss: 11.1140\n",
-      "Epoch [14/20], Loss: 11.0788\n",
-      "Epoch [15/20], Loss: 13.3486\n",
-      "Epoch [16/20], Loss: 9.8230\n",
-      "Epoch [17/20], Loss: 17.6344\n",
-      "Epoch [18/20], Loss: 12.9029\n",
-      "Epoch [19/20], Loss: 11.2573\n",
-      "Epoch [20/20], Loss: 26.8699\n",
+      "Epoch [1/20], Loss: 26.2985\n",
+      "Epoch [2/20], Loss: 8.3852\n",
+      "Epoch [3/20], Loss: 23.5532\n",
+      "Epoch [4/20], Loss: 15.7303\n",
+      "Epoch [5/20], Loss: 18.5449\n",
+      "Epoch [6/20], Loss: 17.0307\n",
+      "Epoch [7/20], Loss: 21.3988\n",
+      "Epoch [8/20], Loss: 11.3593\n",
+      "Epoch [9/20], Loss: 16.1936\n",
+      "Epoch [10/20], Loss: 14.1750\n",
+      "Epoch [11/20], Loss: 17.6670\n",
+      "Epoch [12/20], Loss: 12.1028\n",
+      "Epoch [13/20], Loss: 12.5797\n",
+      "Epoch [14/20], Loss: 12.1575\n",
+      "Epoch [15/20], Loss: 22.0840\n",
+      "Epoch [16/20], Loss: 8.9426\n",
+      "Epoch [17/20], Loss: 5.8802\n",
+      "Epoch [18/20], Loss: 9.8023\n",
+      "Epoch [19/20], Loss: 14.2136\n",
+      "Epoch [20/20], Loss: 12.6082\n",
       "Saved model to /kaggle/working/models/bat_fused_best.pth\n",
       "Training Complete! Model saved to /kaggle/working/models/bat_fused_best.pth\n"
      ]
@@ -558,14 +558,14 @@
   },
   "papermill": {
    "default_parameters": {},
-   "duration": 74.529292,
-   "end_time": "2025-12-08T14:10:07.096009",
+   "duration": 77.500447,
+   "end_time": "2025-12-08T14:16:38.295847",
    "environment_variables": {},
    "exception": null,
    "input_path": "__notebook__.ipynb",
    "output_path": "__notebook__.ipynb",
    "parameters": {},
-   "start_time": "2025-12-08T14:08:52.566717",
+   "start_time": "2025-12-08T14:15:20.795400",
    "version": "2.6.0"
   }
  },
