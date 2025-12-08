@@ -85,6 +85,13 @@ def normalize_annotations(raw_anns) -> List[Dict]:
     return []
 
 
+def get_first_present_key(d: Dict, keys: List[str]):
+    for k in keys:
+        if k in d:
+            return d[k]
+    return None
+
+
 def process_audio_file(audio_path: Path, annotations: Iterable[Dict], out_base: Path, species_key: str = 'label') -> None:
     try:
         y, sr = librosa.load(str(audio_path), sr=None)
@@ -94,9 +101,9 @@ def process_audio_file(audio_path: Path, annotations: Iterable[Dict], out_base: 
 
     for i, ann in enumerate(annotations):
         # common field names
-        start = ann.get('start_time') or ann.get('start') or ann.get('t0') or ann.get('onset')
-        end = ann.get('end_time') or ann.get('end') or ann.get('t1') or ann.get('offset')
-        label = ann.get(species_key) or ann.get('species') or ann.get('label') or ann.get('class')
+        start = get_first_present_key(ann, ['start_time', 'start', 't0', 'onset'])
+        end = get_first_present_key(ann, ['end_time', 'end', 't1', 'offset'])
+        label = get_first_present_key(ann, [species_key, 'species', 'label', 'class'])
         
         if start is None or end is None or label is None:
             print(f"Skipping annotation {i} in {audio_path.name}: Missing data (start={start}, end={end}, label={label})")

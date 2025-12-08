@@ -85,9 +85,9 @@ def process_all_and_write_csv(raw_audio_dirs: list, json_dir: str, out_csv: str,
                 continue
 
             for i, ann in enumerate(anns):
-                start = ann.get('start_time') or ann.get('start') or ann.get('t0') or ann.get('onset')
-                end = ann.get('end_time') or ann.get('end') or ann.get('t1') or ann.get('offset')
-                label = ann.get(species_key) or ann.get('species') or ann.get('label') or ann.get('class')
+                start = w2s.get_first_present_key(ann, ['start_time', 'start', 't0', 'onset'])
+                end = w2s.get_first_present_key(ann, ['end_time', 'end', 't1', 'offset'])
+                label = w2s.get_first_present_key(ann, [species_key, 'species', 'label', 'class'])
                 if start is None or end is None:
                     continue
                 try:
