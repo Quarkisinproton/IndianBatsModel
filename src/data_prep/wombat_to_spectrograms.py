@@ -119,14 +119,32 @@ def process_all(raw_audio_dirs: List[str], json_dir: str, out_dir: str, species_
     out_base = Path(out_dir)
     ensure_dir(out_base)
 
-    for jpath in json_dir.rglob('*.json'):
+    print(f"Scanning for JSONs in {json_dir}...")
+    json_files = list(json_dir.rglob('*.json'))
+    print(f"Found {len(json_files)} JSON files.")
+
+    if len(json_files) == 0:
+        print("WARNING: No JSON files found. Spectrogram generation will be skipped.")
+        return
+
+    # Try to import tqdm for progress bar
+    try:
+        from tqdm import tqdm
+        iterator = tqdm(json_files, desc="Processing JSONs")
+    except ImportError:
+        iterator = json_files
+
+    processed_count = 0
+    for jpath in iterator:
         try:
             data = load_wombat_json(jpath)
-        except Exception:
+        except Exception as e:
+            print(f"Error loading {jpath}: {e}")
             continue
+        
         audio_path = find_audio_for_json(jpath, raw_audio_dirs)
         if audio_path is None:
-            # skip if we can't find the audio
+            print(f"Warning: Could not find audio for {jpath.name}")
             continue
 
         # annotations might be top-level or under keys
@@ -144,7 +162,14 @@ def process_all(raw_audio_dirs: List[str], json_dir: str, out_dir: str, species_
             anns = data
 
         anns = normalize_annotations(anns)
+        if not anns:
+            print(f"Warning: No annotations found in {jpath.name}")
+            continue
+            
         process_audio_file(audio_path, anns, out_base, species_key=species_key)
+        processed_count += 1
+    
+    print(f"Processed {processed_count} files successfully.")
 
 
 if __name__ == '__main__':
