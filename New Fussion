@@ -2,13 +2,13 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "id": "09159427",
+   "id": "d25b0984",
    "metadata": {
     "papermill": {
-     "duration": 0.002227,
-     "end_time": "2025-12-12T05:15:49.839397",
+     "duration": 0.002137,
+     "end_time": "2025-12-12T05:59:16.942092",
      "exception": false,
-     "start_time": "2025-12-12T05:15:49.837170",
+     "start_time": "2025-12-12T05:59:16.939955",
      "status": "completed"
     },
     "tags": []
@@ -28,19 +28,19 @@
   {
    "cell_type": "code",
    "execution_count": 1,
-   "id": "55d078a8",
+   "id": "eac970ef",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-12T05:15:49.843846Z",
-     "iopub.status.busy": "2025-12-12T05:15:49.843648Z",
-     "iopub.status.idle": "2025-12-12T05:15:56.418970Z",
-     "shell.execute_reply": "2025-12-12T05:15:56.418204Z"
+     "iopub.execute_input": "2025-12-12T05:59:16.946423Z",
+     "iopub.status.busy": "2025-12-12T05:59:16.946229Z",
+     "iopub.status.idle": "2025-12-12T05:59:21.979447Z",
+     "shell.execute_reply": "2025-12-12T05:59:21.978733Z"
     },
     "papermill": {
-     "duration": 6.579176,
-     "end_time": "2025-12-12T05:15:56.420544",
+     "duration": 5.037308,
+     "end_time": "2025-12-12T05:59:21.981277",
      "exception": false,
-     "start_time": "2025-12-12T05:15:49.841368",
+     "start_time": "2025-12-12T05:59:16.943969",
      "status": "completed"
     },
     "tags": []
@@ -51,12 +51,12 @@
      "output_type": "stream",
      "text": [
       "Cloning into 'IndianBatsModel'...\r\n",
-      "remote: Enumerating objects: 229, done.\u001b[K\r\n",
-      "remote: Counting objects: 100% (229/229), done.\u001b[K\r\n",
-      "remote: Compressing objects: 100% (109/109), done.\u001b[K\r\n",
-      "remote: Total 229 (delta 125), reused 208 (delta 107), pack-reused 0 (from 0)\u001b[K\r\n",
-      "Receiving objects: 100% (229/229), 63.48 KiB | 2.54 MiB/s, done.\r\n",
-      "Resolving deltas: 100% (125/125), done.\r\n",
+      "remote: Enumerating objects: 232, done.\u001b[K\r\n",
+      "remote: Counting objects: 100% (232/232), done.\u001b[K\r\n",
+      "remote: Compressing objects: 100% (112/112), done.\u001b[K\r\n",
+      "remote: Total 232 (delta 128), reused 207 (delta 107), pack-reused 0 (from 0)\u001b[K\r\n",
+      "Receiving objects: 100% (232/232), 64.99 KiB | 2.41 MiB/s, done.\r\n",
+      "Resolving deltas: 100% (128/128), done.\r\n",
       "Requirement already satisfied: librosa in /usr/local/lib/python3.11/dist-packages (0.11.0)\r\n",
       "Requirement already satisfied: pyyaml in /usr/local/lib/python3.11/dist-packages (6.0.3)\r\n",
       "Requirement already satisfied: pandas in /usr/local/lib/python3.11/dist-packages (2.2.3)\r\n",
@@ -122,19 +122,19 @@
   {
    "cell_type": "code",
    "execution_count": 2,
-   "id": "77c30bdb",
+   "id": "01c8e1fc",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-12T05:15:56.427265Z",
-     "iopub.status.busy": "2025-12-12T05:15:56.426616Z",
-     "iopub.status.idle": "2025-12-12T05:16:10.536534Z",
-     "shell.execute_reply": "2025-12-12T05:16:10.535707Z"
+     "iopub.execute_input": "2025-12-12T05:59:21.987670Z",
+     "iopub.status.busy": "2025-12-12T05:59:21.987132Z",
+     "iopub.status.idle": "2025-12-12T05:59:32.380421Z",
+     "shell.execute_reply": "2025-12-12T05:59:32.379754Z"
     },
     "papermill": {
-     "duration": 14.11454,
-     "end_time": "2025-12-12T05:16:10.537762",
+     "duration": 10.39787,
+     "end_time": "2025-12-12T05:59:32.381693",
      "exception": false,
-     "start_time": "2025-12-12T05:15:56.423222",
+     "start_time": "2025-12-12T05:59:21.983823",
      "status": "completed"
     },
     "tags": []
@@ -184,19 +184,19 @@
   {
    "cell_type": "code",
    "execution_count": 3,
-   "id": "7ff8f235",
+   "id": "fd998674",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-12T05:16:10.544135Z",
-     "iopub.status.busy": "2025-12-12T05:16:10.543564Z",
-     "iopub.status.idle": "2025-12-12T05:16:10.549865Z",
-     "shell.execute_reply": "2025-12-12T05:16:10.549177Z"
+     "iopub.execute_input": "2025-12-12T05:59:32.388147Z",
+     "iopub.status.busy": "2025-12-12T05:59:32.387462Z",
+     "iopub.status.idle": "2025-12-12T05:59:32.393271Z",
+     "shell.execute_reply": "2025-12-12T05:59:32.392573Z"
     },
     "papermill": {
-     "duration": 0.010638,
-     "end_time": "2025-12-12T05:16:10.550981",
+     "duration": 0.010064,
+     "end_time": "2025-12-12T05:59:32.394440",
      "exception": false,
-     "start_time": "2025-12-12T05:16:10.540343",
+     "start_time": "2025-12-12T05:59:32.384376",
      "status": "completed"
     },
     "tags": []
@@ -216,8 +216,8 @@
     "\n",
     "# Input Data Paths (Adjust these to match your Kaggle Dataset structure)\n",
     "RAW_AUDIO_DIRS = [\n",
-    "    '/kaggle/input/data-set-2-species/Test Dataset/Pip ceylonicus Train',\n",
-    "    '/kaggle/input/data-set-2-species/Test Dataset/Pip Tenuis Train'\n",
+    "    '/kaggle/input/data-set-2-species/Pip ceylonicus',\n",
+    "    '/kaggle/input/data-set-2-species/Pip Tenuis'\n",
     "]\n",
     "\n",
     "# Output Paths\n",
@@ -237,19 +237,19 @@
   {
    "cell_type": "code",
    "execution_count": 4,
-   "id": "dcebe95e",
+   "id": "dd6cec40",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-12T05:16:10.557498Z",
-     "iopub.status.busy": "2025-12-12T05:16:10.556814Z",
-     "iopub.status.idle": "2025-12-12T05:16:17.187397Z",
-     "shell.execute_reply": "2025-12-12T05:16:17.186394Z"
+     "iopub.execute_input": "2025-12-12T05:59:32.400309Z",
+     "iopub.status.busy": "2025-12-12T05:59:32.399720Z",
+     "iopub.status.idle": "2025-12-12T05:59:37.059731Z",
+     "shell.execute_reply": "2025-12-12T05:59:37.058847Z"
     },
     "papermill": {
-     "duration": 6.635172,
-     "end_time": "2025-12-12T05:16:17.188673",
+     "duration": 4.664045,
+     "end_time": "2025-12-12T05:59:37.060863",
      "exception": false,
-     "start_time": "2025-12-12T05:16:10.553501",
+     "start_time": "2025-12-12T05:59:32.396818",
      "status": "completed"
     },
     "tags": []
@@ -263,28 +263,28 @@
       "Generating annotations for 2 directories...\n",
       "Output directory: /kaggle/working/data/annotations_json_folder\n",
       "Label strategy: folder\n",
-      "Found 19 audio files in /kaggle/input/data-set-2-species/Test Dataset/Pip ceylonicus Train\n"
+      "Found 19 audio files in /kaggle/input/data-set-2-species/Pip ceylonicus\n"
      ]
     },
     {
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "Processing Pip ceylonicus Train: 100%|██████████| 19/19 [00:06<00:00,  2.94it/s]\n"
+      "Processing Pip ceylonicus: 100%|██████████| 19/19 [00:04<00:00,  4.14it/s]\n"
      ]
     },
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "Found 17 audio files in /kaggle/input/data-set-2-species/Test Dataset/Pip Tenuis Train\n"
+      "Found 17 audio files in /kaggle/input/data-set-2-species/Pip Tenuis\n"
      ]
     },
     {
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "Processing Pip Tenuis Train: 100%|██████████| 17/17 [00:00<00:00, 161.19it/s]"
+      "Processing Pip Tenuis: 100%|██████████| 17/17 [00:00<00:00, 391.99it/s]"
      ]
     },
     {
@@ -316,19 +316,19 @@
   {
    "cell_type": "code",
    "execution_count": 5,
-   "id": "01f98061",
+   "id": "46f69a8d",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-12T05:16:17.195966Z",
-     "iopub.status.busy": "2025-12-12T05:16:17.195369Z",
-     "iopub.status.idle": "2025-12-12T05:16:40.457283Z",
-     "shell.execute_reply": "2025-12-12T05:16:40.456488Z"
+     "iopub.execute_input": "2025-12-12T05:59:37.067687Z",
+     "iopub.status.busy": "2025-12-12T05:59:37.067332Z",
+     "iopub.status.idle": "2025-12-12T05:59:57.854741Z",
+     "shell.execute_reply": "2025-12-12T05:59:57.853820Z"
     },
     "papermill": {
-     "duration": 23.266858,
-     "end_time": "2025-12-12T05:16:40.458590",
+     "duration": 20.792203,
+     "end_time": "2025-12-12T05:59:57.855997",
      "exception": false,
-     "start_time": "2025-12-12T05:16:17.191732",
+     "start_time": "2025-12-12T05:59:37.063794",
      "status": "completed"
     },
     "tags": []
@@ -349,7 +349,7 @@
      "text": [
       "Processing JSONs:   0%|          | 0/36 [00:00<?, ?it/s]/usr/local/lib/python3.11/dist-packages/librosa/feature/spectral.py:2148: UserWarning: Empty filters detected in mel frequency basis. Some channels will produce empty responses. Try increasing your sampling rate (and fmax) or reducing n_mels.\n",
       "  mel_basis = filters.mel(sr=sr, n_fft=n_fft, **kwargs)\n",
-      "Processing JSONs: 100%|██████████| 36/36 [00:23<00:00,  1.55it/s]"
+      "Processing JSONs: 100%|██████████| 36/36 [00:20<00:00,  1.73it/s]"
      ]
     },
     {
@@ -358,7 +358,7 @@
      "text": [
       "Processed 36 files successfully.\n",
       "Checking output directory: /kaggle/working/data/processed/spectrograms\n",
-      "Found 2 species folders: ['Pip_ceylonicus_Train', 'Pip_Tenuis_Train']\n",
+      "Found 2 species folders: ['Pip_Tenuis', 'Pip_ceylonicus']\n",
       "Total spectrogram images found: 36\n",
       "Done.\n"
      ]
@@ -386,19 +386,19 @@
   {
    "cell_type": "code",
    "execution_count": 6,
-   "id": "e714a3ea",
+   "id": "ebcc1f81",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-12T05:16:40.469482Z",
-     "iopub.status.busy": "2025-12-12T05:16:40.469033Z",
-     "iopub.status.idle": "2025-12-12T05:16:44.419326Z",
-     "shell.execute_reply": "2025-12-12T05:16:44.418507Z"
+     "iopub.execute_input": "2025-12-12T05:59:57.866311Z",
+     "iopub.status.busy": "2025-12-12T05:59:57.865734Z",
+     "iopub.status.idle": "2025-12-12T06:00:01.720331Z",
+     "shell.execute_reply": "2025-12-12T06:00:01.719517Z"
     },
     "papermill": {
-     "duration": 3.956919,
-     "end_time": "2025-12-12T05:16:44.420753",
+     "duration": 3.861005,
+     "end_time": "2025-12-12T06:00:01.721642",
      "exception": false,
-     "start_time": "2025-12-12T05:16:40.463834",
+     "start_time": "2025-12-12T05:59:57.860637",
      "status": "completed"
     },
     "tags": []
@@ -428,19 +428,19 @@
   {
    "cell_type": "code",
    "execution_count": 7,
-   "id": "8eaf4fa7",
+   "id": "87fb1213",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-12T05:16:44.431338Z",
-     "iopub.status.busy": "2025-12-12T05:16:44.431108Z",
-     "iopub.status.idle": "2025-12-12T05:16:56.140204Z",
-     "shell.execute_reply": "2025-12-12T05:16:56.139180Z"
+     "iopub.execute_input": "2025-12-12T06:00:01.731620Z",
+     "iopub.status.busy": "2025-12-12T06:00:01.731378Z",
+     "iopub.status.idle": "2025-12-12T06:00:12.776210Z",
+     "shell.execute_reply": "2025-12-12T06:00:12.775188Z"
     },
     "papermill": {
-     "duration": 11.715854,
-     "end_time": "2025-12-12T05:16:56.141665",
+     "duration": 11.051399,
+     "end_time": "2025-12-12T06:00:12.777620",
      "exception": false,
-     "start_time": "2025-12-12T05:16:44.425811",
+     "start_time": "2025-12-12T06:00:01.726221",
      "status": "completed"
     },
     "tags": []
@@ -464,33 +464,33 @@
       "/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.\n",
       "  warnings.warn(msg)\n",
       "Downloading: \"https://download.pytorch.org/models/resnet18-f37072fd.pth\" to /root/.cache/torch/hub/checkpoints/resnet18-f37072fd.pth\n",
-      "100%|██████████| 44.7M/44.7M [00:00<00:00, 191MB/s]\n"
+      "100%|██████████| 44.7M/44.7M [00:00<00:00, 189MB/s]\n"
      ]
     },
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "Epoch [1/20], Loss: 58.4526\n",
-      "Epoch [2/20], Loss: 21.2839\n",
-      "Epoch [3/20], Loss: 32.7771\n",
-      "Epoch [4/20], Loss: 17.5342\n",
-      "Epoch [5/20], Loss: 24.3778\n",
-      "Epoch [6/20], Loss: 7.8579\n",
-      "Epoch [7/20], Loss: 14.1975\n",
-      "Epoch [8/20], Loss: 11.2934\n",
-      "Epoch [9/20], Loss: 16.0380\n",
-      "Epoch [10/20], Loss: 15.0939\n",
-      "Epoch [11/20], Loss: 15.1580\n",
-      "Epoch [12/20], Loss: 22.3974\n",
-      "Epoch [13/20], Loss: 11.3562\n",
-      "Epoch [14/20], Loss: 14.0199\n",
-      "Epoch [15/20], Loss: 13.2177\n",
-      "Epoch [16/20], Loss: 27.2045\n",
-      "Epoch [17/20], Loss: 24.9450\n",
-      "Epoch [18/20], Loss: 19.3283\n",
-      "Epoch [19/20], Loss: 13.0677\n",
-      "Epoch [20/20], Loss: 11.3248\n",
+      "Epoch [1/20], Loss: 36.9228\n",
+      "Epoch [2/20], Loss: 27.4884\n",
+      "Epoch [3/20], Loss: 41.8071\n",
+      "Epoch [4/20], Loss: 61.9831\n",
+      "Epoch [5/20], Loss: 20.9785\n",
+      "Epoch [6/20], Loss: 25.7108\n",
+      "Epoch [7/20], Loss: 15.4461\n",
+      "Epoch [8/20], Loss: 9.3374\n",
+      "Epoch [9/20], Loss: 30.3610\n",
+      "Epoch [10/20], Loss: 32.5368\n",
+      "Epoch [11/20], Loss: 16.2425\n",
+      "Epoch [12/20], Loss: 40.6562\n",
+      "Epoch [13/20], Loss: 14.6087\n",
+      "Epoch [14/20], Loss: 11.4568\n",
+      "Epoch [15/20], Loss: 10.8919\n",
+      "Epoch [16/20], Loss: 9.2106\n",
+      "Epoch [17/20], Loss: 8.7521\n",
+      "Epoch [18/20], Loss: 13.2858\n",
+      "Epoch [19/20], Loss: 9.2254\n",
+      "Epoch [20/20], Loss: 5.1650\n",
       "Saved model to /kaggle/working/models/bat_fused_best.pth\n",
       "Training Complete! Model saved to /kaggle/working/models/bat_fused_best.pth\n"
      ]
@@ -506,7 +506,7 @@
     "        'num_classes': 3\n",
     "    },\n",
     "    'training': {\n",
-    "        'batch_size': 8,\n",
+    "        'batch_size': 6,\n",
     "        'learning_rate': 1e-3,\n",
     "        'num_epochs': 20,\n",
     "        'model_save_path': MODEL_SAVE_PATH,\n",
@@ -525,8 +525,9 @@
    "accelerator": "nvidiaTeslaT4",
    "dataSources": [
     {
+     "databundleVersionId": 14905925,
      "datasetId": 8956228,
-     "sourceId": 14070385,
+     "sourceId": 14121314,
      "sourceType": "datasetVersion"
     }
    ],
@@ -555,14 +556,14 @@
   },
   "papermill": {
    "default_parameters": {},
-   "duration": 74.596777,
-   "end_time": "2025-12-12T05:16:59.300091",
+   "duration": 62.027193,
+   "end_time": "2025-12-12T06:00:15.241251",
    "environment_variables": {},
    "exception": null,
    "input_path": "__notebook__.ipynb",
    "output_path": "__notebook__.ipynb",
    "parameters": {},
-   "start_time": "2025-12-12T05:15:44.703314",
+   "start_time": "2025-12-12T05:59:13.214058",
    "version": "2.6.0"
   }
  },
