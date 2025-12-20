@@ -121,7 +121,10 @@ def process_audio_file(audio_path: Path, annotations: Iterable[Dict], out_base: 
             continue
             
         S_db = make_mel_spectrogram(seg, sr)
-        safe_label = str(label).strip().replace(' ', '_')
+        safe_label = str(label).strip()
+        # avoid accidental nested directories or invalid path characters
+        safe_label = safe_label.replace('/', '_').replace('\\', '_').replace(os.sep, '_')
+        safe_label = '_'.join(safe_label.split())
         out_dir = out_base / safe_label
         ensure_dir(out_dir)
         out_name = f"{audio_path.stem}_{i}.png"

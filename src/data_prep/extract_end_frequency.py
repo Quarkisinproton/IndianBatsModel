@@ -55,7 +55,7 @@ def process_all_and_write_csv(raw_audio_dirs: list, json_dir: str, out_csv: str,
 
     with out_csv.open('w', newline='') as csvf:
         writer = csv.writer(csvf)
-        writer.writerow(['json_file', 'audio_file', 'segment_index', 'label', 'start', 'end', 'end_freq_hz'])
+        writer.writerow(['json_file', 'audio_file', 'segment_index', 'label', 'start', 'end', 'end_freq_hz', 'low_freq_hz', 'high_freq_hz'])
 
         for jpath in json_dir.rglob('*.json'):
             try:
@@ -96,7 +96,11 @@ def process_all_and_write_csv(raw_audio_dirs: list, json_dir: str, out_csv: str,
                 except Exception:
                     continue
                 ef = compute_end_frequency(y, sr, start_f, end_f)
-                writer.writerow([str(jpath), str(audio_path), i, label or '', start_f, end_f, ef])
+                
+                low_f = w2s.get_first_present_key(ann, ['low_freq_hz', 'low_f', 'min_freq'])
+                high_f = w2s.get_first_present_key(ann, ['high_freq_hz', 'high_f', 'max_freq'])
+
+                writer.writerow([str(jpath), str(audio_path), i, label or '', start_f, end_f, ef, low_f or '', high_f or ''])
 
 
 if __name__ == '__main__':
