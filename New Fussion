@@ -2,13 +2,13 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "id": "d25b0984",
+   "id": "aef54b6c",
    "metadata": {
     "papermill": {
-     "duration": 0.002137,
-     "end_time": "2025-12-12T05:59:16.942092",
+     "duration": 0.002184,
+     "end_time": "2025-12-20T09:34:28.285776",
      "exception": false,
-     "start_time": "2025-12-12T05:59:16.939955",
+     "start_time": "2025-12-20T09:34:28.283592",
      "status": "completed"
     },
     "tags": []
@@ -28,19 +28,19 @@
   {
    "cell_type": "code",
    "execution_count": 1,
-   "id": "eac970ef",
+   "id": "f80b3200",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-12T05:59:16.946423Z",
-     "iopub.status.busy": "2025-12-12T05:59:16.946229Z",
-     "iopub.status.idle": "2025-12-12T05:59:21.979447Z",
-     "shell.execute_reply": "2025-12-12T05:59:21.978733Z"
+     "iopub.execute_input": "2025-12-20T09:34:28.290597Z",
+     "iopub.status.busy": "2025-12-20T09:34:28.290007Z",
+     "iopub.status.idle": "2025-12-20T09:34:33.539542Z",
+     "shell.execute_reply": "2025-12-20T09:34:33.538802Z"
     },
     "papermill": {
-     "duration": 5.037308,
-     "end_time": "2025-12-12T05:59:21.981277",
+     "duration": 5.25356,
+     "end_time": "2025-12-20T09:34:33.541307",
      "exception": false,
-     "start_time": "2025-12-12T05:59:16.943969",
+     "start_time": "2025-12-20T09:34:28.287747",
      "status": "completed"
     },
     "tags": []
@@ -51,12 +51,12 @@
      "output_type": "stream",
      "text": [
       "Cloning into 'IndianBatsModel'...\r\n",
-      "remote: Enumerating objects: 232, done.\u001b[K\r\n",
-      "remote: Counting objects: 100% (232/232), done.\u001b[K\r\n",
-      "remote: Compressing objects: 100% (112/112), done.\u001b[K\r\n",
-      "remote: Total 232 (delta 128), reused 207 (delta 107), pack-reused 0 (from 0)\u001b[K\r\n",
-      "Receiving objects: 100% (232/232), 64.99 KiB | 2.41 MiB/s, done.\r\n",
-      "Resolving deltas: 100% (128/128), done.\r\n",
+      "remote: Enumerating objects: 273, done.\u001b[K\r\n",
+      "remote: Counting objects: 100% (30/30), done.\u001b[K\r\n",
+      "remote: Compressing objects: 100% (24/24), done.\u001b[K\r\n",
+      "remote: Total 273 (delta 11), reused 20 (delta 6), pack-reused 243 (from 1)\u001b[K\r\n",
+      "Receiving objects: 100% (273/273), 125.92 KiB | 2.52 MiB/s, done.\r\n",
+      "Resolving deltas: 100% (147/147), done.\r\n",
       "Requirement already satisfied: librosa in /usr/local/lib/python3.11/dist-packages (0.11.0)\r\n",
       "Requirement already satisfied: pyyaml in /usr/local/lib/python3.11/dist-packages (6.0.3)\r\n",
       "Requirement already satisfied: pandas in /usr/local/lib/python3.11/dist-packages (2.2.3)\r\n",
@@ -122,19 +122,19 @@
   {
    "cell_type": "code",
    "execution_count": 2,
-   "id": "01c8e1fc",
+   "id": "84744a98",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-12T05:59:21.987670Z",
-     "iopub.status.busy": "2025-12-12T05:59:21.987132Z",
-     "iopub.status.idle": "2025-12-12T05:59:32.380421Z",
-     "shell.execute_reply": "2025-12-12T05:59:32.379754Z"
+     "iopub.execute_input": "2025-12-20T09:34:33.547261Z",
+     "iopub.status.busy": "2025-12-20T09:34:33.546826Z",
+     "iopub.status.idle": "2025-12-20T09:34:44.077852Z",
+     "shell.execute_reply": "2025-12-20T09:34:44.076995Z"
     },
     "papermill": {
-     "duration": 10.39787,
-     "end_time": "2025-12-12T05:59:32.381693",
+     "duration": 10.535389,
+     "end_time": "2025-12-20T09:34:44.079131",
      "exception": false,
-     "start_time": "2025-12-12T05:59:21.983823",
+     "start_time": "2025-12-20T09:34:33.543742",
      "status": "completed"
     },
     "tags": []
@@ -169,6 +169,7 @@
     "    from src.data_prep.generate_annotations import generate_annotations\n",
     "    from src.data_prep.wombat_to_spectrograms import process_all as generate_spectrograms\n",
     "    from src.data_prep.extract_end_frequency import process_all_and_write_csv as extract_features\n",
+    "    from src.data_prep.whombat_project_to_wombat import convert_whombat_project_to_wombat_jsons\n",
     "    from src.train import train_model\n",
     "    print(\"Imports successful!\")\n",
     "except ImportError as e:\n",
@@ -177,6 +178,7 @@
     "    from data_prep.generate_annotations import generate_annotations\n",
     "    from data_prep.wombat_to_spectrograms import process_all as generate_spectrograms\n",
     "    from data_prep.extract_end_frequency import process_all_and_write_csv as extract_features\n",
+    "    from data_prep.whombat_project_to_wombat import convert_whombat_project_to_wombat_jsons\n",
     "    from train import train_model\n",
     "    print(\"Imports successful (fallback)!\")"
    ]
@@ -184,19 +186,19 @@
   {
    "cell_type": "code",
    "execution_count": 3,
-   "id": "fd998674",
+   "id": "c55cda4c",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-12T05:59:32.388147Z",
-     "iopub.status.busy": "2025-12-12T05:59:32.387462Z",
-     "iopub.status.idle": "2025-12-12T05:59:32.393271Z",
-     "shell.execute_reply": "2025-12-12T05:59:32.392573Z"
+     "iopub.execute_input": "2025-12-20T09:34:44.085121Z",
+     "iopub.status.busy": "2025-12-20T09:34:44.084454Z",
+     "iopub.status.idle": "2025-12-20T09:34:44.091010Z",
+     "shell.execute_reply": "2025-12-20T09:34:44.090300Z"
     },
     "papermill": {
-     "duration": 0.010064,
-     "end_time": "2025-12-12T05:59:32.394440",
+     "duration": 0.010527,
+     "end_time": "2025-12-20T09:34:44.092047",
      "exception": false,
-     "start_time": "2025-12-12T05:59:32.384376",
+     "start_time": "2025-12-20T09:34:44.081520",
      "status": "completed"
     },
     "tags": []
@@ -216,8 +218,20 @@
     "\n",
     "# Input Data Paths (Adjust these to match your Kaggle Dataset structure)\n",
     "RAW_AUDIO_DIRS = [\n",
-    "    '/kaggle/input/data-set-2-species/Pip ceylonicus',\n",
-    "    '/kaggle/input/data-set-2-species/Pip Tenuis'\n",
+    "    '/kaggle/input/pip-ceylonicusbat-species',\n",
+    "    '/kaggle/input/pip-tenuisbat-species',\n",
+    "]\n",
+    "\n",
+    "# Annotation mode\n",
+    "# - 'auto': generate dummy full-file annotations from folder names (NOT RECOMMENDED for call classification)\n",
+    "# - 'provided': convert Whombat project JSON exports into per-audio Wombat JSONs (RECOMMENDED)\n",
+    "ANNOTATION_MODE = 'provided'  # 'auto' or 'provided'\n",
+    "\n",
+    "# Only used when ANNOTATION_MODE == 'provided'\n",
+    "# Put the Whombat project export JSON paths here (e.g. exported from Whombat)\n",
+    "WHOMBAT_PROJECT_JSONS = [\n",
+    "    '/kaggle/input/annotations-tenuis-ceylonicus/tenuis annotations.json',\n",
+    "    '/kaggle/input/annotations-tenuis-ceylonicus/Pip ceylonicus.json',\n",
     "]\n",
     "\n",
     "# Output Paths\n",
@@ -228,6 +242,7 @@
     "MODEL_SAVE_PATH = os.path.join(WORK_DIR, 'models', 'bat_fused_best.pth')\n",
     "\n",
     "# Ensure directories exist\n",
+    "Path(JSON_DIR).mkdir(parents=True, exist_ok=True)\n",
     "Path(FEATURES_OUT).mkdir(parents=True, exist_ok=True)\n",
     "Path(os.path.dirname(MODEL_SAVE_PATH)).mkdir(parents=True, exist_ok=True)\n",
     "\n",
@@ -237,19 +252,19 @@
   {
    "cell_type": "code",
    "execution_count": 4,
-   "id": "dd6cec40",
+   "id": "039021e6",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-12T05:59:32.400309Z",
-     "iopub.status.busy": "2025-12-12T05:59:32.399720Z",
-     "iopub.status.idle": "2025-12-12T05:59:37.059731Z",
-     "shell.execute_reply": "2025-12-12T05:59:37.058847Z"
+     "iopub.execute_input": "2025-12-20T09:34:44.097333Z",
+     "iopub.status.busy": "2025-12-20T09:34:44.097154Z",
+     "iopub.status.idle": "2025-12-20T09:34:44.119093Z",
+     "shell.execute_reply": "2025-12-20T09:34:44.118474Z"
     },
     "papermill": {
-     "duration": 4.664045,
-     "end_time": "2025-12-12T05:59:37.060863",
+     "duration": 0.025854,
+     "end_time": "2025-12-20T09:34:44.120174",
      "exception": false,
-     "start_time": "2025-12-12T05:59:32.396818",
+     "start_time": "2025-12-20T09:34:44.094320",
      "status": "completed"
     },
     "tags": []
@@ -259,76 +274,59 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "Generating Annotations...\n",
-      "Generating annotations for 2 directories...\n",
-      "Output directory: /kaggle/working/data/annotations_json_folder\n",
-      "Label strategy: folder\n",
-      "Found 19 audio files in /kaggle/input/data-set-2-species/Pip ceylonicus\n"
-     ]
-    },
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "Processing Pip ceylonicus: 100%|██████████| 19/19 [00:04<00:00,  4.14it/s]\n"
-     ]
-    },
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "Found 17 audio files in /kaggle/input/data-set-2-species/Pip Tenuis\n"
-     ]
-    },
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "Processing Pip Tenuis: 100%|██████████| 17/17 [00:00<00:00, 391.99it/s]"
-     ]
-    },
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
+      "Preparing Annotations...\n",
+      "Mode: provided (convert Whombat project JSON exports)\n",
+      "Converted /kaggle/input/annotations-tenuis-ceylonicus/tenuis annotations.json: jsons_written=3, sound_events_written=71, skipped_unlabeled=1\n",
+      "Converted /kaggle/input/annotations-tenuis-ceylonicus/Pip ceylonicus.json: jsons_written=18, sound_events_written=127, skipped_unlabeled=1\n",
       "Done.\n"
-     ]
-    },
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "\n"
      ]
     }
    ],
    "source": [
-    "# 4. Generate Annotations\n",
-    "print(\"Generating Annotations...\")\n",
-    "generate_annotations(\n",
-    "    raw_audio_dirs=RAW_AUDIO_DIRS,\n",
-    "    output_dir=JSON_DIR,\n",
-    "    label_strategy='folder'\n",
-    ")\n",
+    "# 4. Generate/Convert Annotations\n",
+    "print(\"Preparing Annotations...\")\n",
+    "\n",
+    "if ANNOTATION_MODE == 'auto':\n",
+    "    print(\"Mode: auto (generate dummy full-file annotations)\")\n",
+    "    generate_annotations(\n",
+    "        raw_audio_dirs=RAW_AUDIO_DIRS,\n",
+    "        output_dir=JSON_DIR,\n",
+    "        label_strategy='folder',\n",
+    "    )\n",
+    "elif ANNOTATION_MODE == 'provided':\n",
+    "    print(\"Mode: provided (convert Whombat project JSON exports)\")\n",
+    "    if not WHOMBAT_PROJECT_JSONS:\n",
+    "        raise ValueError(\"WHOMBAT_PROJECT_JSONS is empty. Add your Whombat project export JSON paths.\")\n",
+    "    for pj in WHOMBAT_PROJECT_JSONS:\n",
+    "        summary = convert_whombat_project_to_wombat_jsons(\n",
+    "            project_json_path=pj,\n",
+    "            output_dir=JSON_DIR,\n",
+    "            tag_key='Species',\n",
+    "            skip_unlabeled=True,\n",
+    "        )\n",
+    "        print(f\"Converted {pj}: jsons_written={summary.jsons_written}, sound_events_written={summary.sound_events_written}, skipped_unlabeled={summary.sound_events_skipped_unlabeled}\")\n",
+    "else:\n",
+    "    raise ValueError(f\"Unknown ANNOTATION_MODE: {ANNOTATION_MODE}\")\n",
+    "\n",
     "print(\"Done.\")"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 5,
-   "id": "46f69a8d",
+   "id": "9f6fe831",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-12T05:59:37.067687Z",
-     "iopub.status.busy": "2025-12-12T05:59:37.067332Z",
-     "iopub.status.idle": "2025-12-12T05:59:57.854741Z",
-     "shell.execute_reply": "2025-12-12T05:59:57.853820Z"
+     "iopub.execute_input": "2025-12-20T09:34:44.125615Z",
+     "iopub.status.busy": "2025-12-20T09:34:44.125213Z",
+     "iopub.status.idle": "2025-12-20T09:35:08.085296Z",
+     "shell.execute_reply": "2025-12-20T09:35:08.084518Z"
     },
     "papermill": {
-     "duration": 20.792203,
-     "end_time": "2025-12-12T05:59:57.855997",
+     "duration": 23.964291,
+     "end_time": "2025-12-20T09:35:08.086674",
      "exception": false,
-     "start_time": "2025-12-12T05:59:37.063794",
+     "start_time": "2025-12-20T09:34:44.122383",
      "status": "completed"
     },
     "tags": []
@@ -340,26 +338,68 @@
      "text": [
       "Generating Spectrograms...\n",
       "Scanning for JSONs in /kaggle/working/data/annotations_json_folder...\n",
-      "Found 36 JSON files.\n"
+      "Found 21 JSON files.\n"
      ]
     },
     {
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "Processing JSONs:   0%|          | 0/36 [00:00<?, ?it/s]/usr/local/lib/python3.11/dist-packages/librosa/feature/spectral.py:2148: UserWarning: Empty filters detected in mel frequency basis. Some channels will produce empty responses. Try increasing your sampling rate (and fmax) or reducing n_mels.\n",
+      "Processing JSONs:   0%|          | 0/21 [00:00<?, ?it/s]/usr/local/lib/python3.11/dist-packages/librosa/feature/spectral.py:2148: UserWarning: Empty filters detected in mel frequency basis. Some channels will produce empty responses. Try increasing your sampling rate (and fmax) or reducing n_mels.\n",
       "  mel_basis = filters.mel(sr=sr, n_fft=n_fft, **kwargs)\n",
-      "Processing JSONs: 100%|██████████| 36/36 [00:20<00:00,  1.73it/s]"
+      "Processing JSONs:  14%|█▍        | 3/21 [00:15<01:04,  3.56s/it]"
      ]
     },
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "Processed 36 files successfully.\n",
+      "Warning: Could not find audio for pt2.json\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "Processing JSONs:  38%|███▊      | 8/21 [00:16<00:10,  1.27it/s]"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Warning: Could not find audio for pt1.json\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "Processing JSONs:  71%|███████▏  | 15/21 [00:19<00:02,  2.45it/s]"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Warning: Could not find audio for pt3.json\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "Processing JSONs: 100%|██████████| 21/21 [00:23<00:00,  1.14s/it]"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Processed 18 files successfully.\n",
       "Checking output directory: /kaggle/working/data/processed/spectrograms\n",
-      "Found 2 species folders: ['Pip_Tenuis', 'Pip_ceylonicus']\n",
-      "Total spectrogram images found: 36\n",
+      "Found 2 species folders: ['Pip._tenuis', 'Sco._heathii__Pip._ceylonicus']\n",
+      "Total spectrogram images found: 127\n",
       "Done.\n"
      ]
     },
@@ -386,19 +426,19 @@
   {
    "cell_type": "code",
    "execution_count": 6,
-   "id": "ebcc1f81",
+   "id": "75b8a767",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-12T05:59:57.866311Z",
-     "iopub.status.busy": "2025-12-12T05:59:57.865734Z",
-     "iopub.status.idle": "2025-12-12T06:00:01.720331Z",
-     "shell.execute_reply": "2025-12-12T06:00:01.719517Z"
+     "iopub.execute_input": "2025-12-20T09:35:08.095371Z",
+     "iopub.status.busy": "2025-12-20T09:35:08.094962Z",
+     "iopub.status.idle": "2025-12-20T09:35:08.472298Z",
+     "shell.execute_reply": "2025-12-20T09:35:08.471537Z"
     },
     "papermill": {
-     "duration": 3.861005,
-     "end_time": "2025-12-12T06:00:01.721642",
+     "duration": 0.382974,
+     "end_time": "2025-12-20T09:35:08.473524",
      "exception": false,
-     "start_time": "2025-12-12T05:59:57.860637",
+     "start_time": "2025-12-20T09:35:08.090550",
      "status": "completed"
     },
     "tags": []
@@ -428,19 +468,19 @@
   {
    "cell_type": "code",
    "execution_count": 7,
-   "id": "87fb1213",
+   "id": "a59f0b52",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-12-12T06:00:01.731620Z",
-     "iopub.status.busy": "2025-12-12T06:00:01.731378Z",
-     "iopub.status.idle": "2025-12-12T06:00:12.776210Z",
-     "shell.execute_reply": "2025-12-12T06:00:12.775188Z"
+     "iopub.execute_input": "2025-12-20T09:35:08.481616Z",
+     "iopub.status.busy": "2025-12-20T09:35:08.481378Z",
+     "iopub.status.idle": "2025-12-20T09:35:29.928689Z",
+     "shell.execute_reply": "2025-12-20T09:35:29.927754Z"
     },
     "papermill": {
-     "duration": 11.051399,
-     "end_time": "2025-12-12T06:00:12.777620",
+     "duration": 21.452671,
+     "end_time": "2025-12-20T09:35:29.929970",
      "exception": false,
-     "start_time": "2025-12-12T06:00:01.726221",
+     "start_time": "2025-12-20T09:35:08.477299",
      "status": "completed"
     },
     "tags": []
@@ -450,6 +490,7 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
+      "Detected num_classes=2 from /kaggle/working/data/processed/spectrograms\n",
       "Starting Training...\n"
      ]
     },
@@ -464,33 +505,33 @@
       "/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.\n",
       "  warnings.warn(msg)\n",
       "Downloading: \"https://download.pytorch.org/models/resnet18-f37072fd.pth\" to /root/.cache/torch/hub/checkpoints/resnet18-f37072fd.pth\n",
-      "100%|██████████| 44.7M/44.7M [00:00<00:00, 189MB/s]\n"
+      "100%|██████████| 44.7M/44.7M [00:00<00:00, 162MB/s]\n"
      ]
     },
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "Epoch [1/20], Loss: 36.9228\n",
-      "Epoch [2/20], Loss: 27.4884\n",
-      "Epoch [3/20], Loss: 41.8071\n",
-      "Epoch [4/20], Loss: 61.9831\n",
-      "Epoch [5/20], Loss: 20.9785\n",
-      "Epoch [6/20], Loss: 25.7108\n",
-      "Epoch [7/20], Loss: 15.4461\n",
-      "Epoch [8/20], Loss: 9.3374\n",
-      "Epoch [9/20], Loss: 30.3610\n",
-      "Epoch [10/20], Loss: 32.5368\n",
-      "Epoch [11/20], Loss: 16.2425\n",
-      "Epoch [12/20], Loss: 40.6562\n",
-      "Epoch [13/20], Loss: 14.6087\n",
-      "Epoch [14/20], Loss: 11.4568\n",
-      "Epoch [15/20], Loss: 10.8919\n",
-      "Epoch [16/20], Loss: 9.2106\n",
-      "Epoch [17/20], Loss: 8.7521\n",
-      "Epoch [18/20], Loss: 13.2858\n",
-      "Epoch [19/20], Loss: 9.2254\n",
-      "Epoch [20/20], Loss: 5.1650\n",
+      "Epoch [1/20], Loss: 507.0092\n",
+      "Epoch [2/20], Loss: 215.9872\n",
+      "Epoch [3/20], Loss: 280.2634\n",
+      "Epoch [4/20], Loss: 238.4267\n",
+      "Epoch [5/20], Loss: 281.7380\n",
+      "Epoch [6/20], Loss: 210.6865\n",
+      "Epoch [7/20], Loss: 266.1240\n",
+      "Epoch [8/20], Loss: 211.2761\n",
+      "Epoch [9/20], Loss: 119.4062\n",
+      "Epoch [10/20], Loss: 138.6039\n",
+      "Epoch [11/20], Loss: 185.9993\n",
+      "Epoch [12/20], Loss: 155.7960\n",
+      "Epoch [13/20], Loss: 201.3232\n",
+      "Epoch [14/20], Loss: 148.4936\n",
+      "Epoch [15/20], Loss: 150.0006\n",
+      "Epoch [16/20], Loss: 117.3708\n",
+      "Epoch [17/20], Loss: 128.2034\n",
+      "Epoch [18/20], Loss: 123.6548\n",
+      "Epoch [19/20], Loss: 169.2697\n",
+      "Epoch [20/20], Loss: 83.7774\n",
       "Saved model to /kaggle/working/models/bat_fused_best.pth\n",
       "Training Complete! Model saved to /kaggle/working/models/bat_fused_best.pth\n"
      ]
@@ -498,20 +539,24 @@
    ],
    "source": [
     "# 7. Run Training\n",
+    "# Infer num_classes from generated spectrogram folders\n",
+    "num_classes = len([p for p in Path(SPECT_OUT).iterdir() if p.is_dir()])\n",
+    "print(f\"Detected num_classes={num_classes} from {SPECT_OUT}\")\n",
+    "\n",
     "# Define Training Configuration Dictionary\n",
     "config = {\n",
     "    'data': {\n",
     "        'train_spectrograms': SPECT_OUT,\n",
     "        'features_csv': FEATURES_CSV,\n",
-    "        'num_classes': 3\n",
+    "        'num_classes': num_classes,\n",
     "    },\n",
     "    'training': {\n",
-    "        'batch_size': 6,\n",
-    "        'learning_rate': 1e-3,\n",
+    "        'batch_size': 9,\n",
+    "        'learning_rate': 1e-4,\n",
     "        'num_epochs': 20,\n",
     "        'model_save_path': MODEL_SAVE_PATH,\n",
-    "        'num_workers': 8\n",
-    "    }\n",
+    "        'num_workers': 8,\n",
+    "    },\n",
     "}\n",
     "\n",
     "print(\"Starting Training...\")\n",
@@ -525,9 +570,18 @@
    "accelerator": "nvidiaTeslaT4",
    "dataSources": [
     {
-     "databundleVersionId": 14905925,
-     "datasetId": 8956228,
-     "sourceId": 14121314,
+     "datasetId": 8811467,
+     "sourceId": 13835459,
+     "sourceType": "datasetVersion"
+    },
+    {
+     "datasetId": 8811486,
+     "sourceId": 13835480,
+     "sourceType": "datasetVersion"
+    },
+    {
+     "datasetId": 9080903,
+     "sourceId": 14233920,
      "sourceType": "datasetVersion"
     }
    ],
@@ -556,14 +610,14 @@
   },
   "papermill": {
    "default_parameters": {},
-   "duration": 62.027193,
-   "end_time": "2025-12-12T06:00:15.241251",
+   "duration": 68.066004,
+   "end_time": "2025-12-20T09:35:32.565460",
    "environment_variables": {},
    "exception": null,
    "input_path": "__notebook__.ipynb",
    "output_path": "__notebook__.ipynb",
    "parameters": {},
-   "start_time": "2025-12-12T05:59:13.214058",
+   "start_time": "2025-12-20T09:34:24.499456",
    "version": "2.6.0"
   }
  },
