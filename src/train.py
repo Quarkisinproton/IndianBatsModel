@@ -84,6 +84,11 @@ def train_model(config):
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=lr)
 
+    # Prepare for saving model
+    model_save_path = train_cfg.get('model_save_path') or 'models/bat_model.pth'
+    os.makedirs(os.path.dirname(model_save_path) or '.', exist_ok=True)
+    best_loss = float('inf')
+
     # Training loop
     for epoch in range(num_epochs):
         model.train()
@@ -111,21 +116,23 @@ def train_model(config):
             num_batches += 1
 
         if num_batches:
-            print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {running_loss/num_batches:.4f}')
+            epoch_loss = running_loss / num_batches
+            print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {epoch_loss:.4f}')
+            
+            if epoch_loss < best_loss:
+                best_loss = epoch_loss
+                save_model(model, model_save_path)
+                print(f"  New best model saved with loss {best_loss:.4f}")
         else:
             print('No training data found. Check processed spectrograms path:', train_dir)
             break
 
-    # Save the trained model
-    model_save_path = train_cfg.get('model_save_path') or 'models/bat_model.pth'
-    os.makedirs(os.path.dirname(model_save_path) or '.', exist_ok=True)
-    save_model(model, model_save_path)
     # save class mapping for inference if available
     class_map = getattr(train_dataset, 'class_to_idx', None)
     if class_map:
         with open(model_save_path + '.classes.json', 'w') as f:
             json.dump(class_map, f)
-    print('Saved model to', model_save_path)
+    print('Training complete. Best model saved to', model_save_path)
 
 if __name__ == "__main__":
     # Load configuration
