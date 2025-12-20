@@ -65,14 +65,21 @@ def train_model(config):
 
     # Initialize model, loss function, and optimizer
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    
     if use_features:
         # infer numeric feature dimension from a sample
         sample_image, sample_feat, sample_label = train_dataset[0]
         feat_dim = sample_feat.numel()
         # use pretrained backbone for better transfer learning when data is small
-        model = CNNWithFeatures(num_classes=num_classes, numeric_feat_dim=feat_dim, pretrained=True).to(device)
+        model = CNNWithFeatures(num_classes=num_classes, numeric_feat_dim=feat_dim, pretrained=True)
     else:
-        model = CNN(num_classes=num_classes).to(device)
+        model = CNN(num_classes=num_classes)
+
+    if torch.cuda.device_count() > 1:
+        print(f"Using {torch.cuda.device_count()} GPUs!")
+        model = nn.DataParallel(model)
+    
+    model = model.to(device)
 
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=lr)
