@@ -9,9 +9,9 @@ data:
   processed_data_path: "data/processed/spectrograms"
 
 model:
-  input_size: [1, 128, 128]  # Adjust based on the spectrogram size
-  num_classes: 3  # Number of bat species
-  architecture: "cnn"  # Specify the model architecture
+  input_size: [1, 128, 128] 
+  num_classes: 3
+  architecture: "cnn"
 
 augmentation:
   enabled: true

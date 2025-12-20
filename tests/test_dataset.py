@@ -1,18 +1,19 @@
 import unittest
-from src.datasets.spectrogram_dataset import SpectrogramDataset
+from Model.datasets.spectrogram_dataset import SpectrogramDataset
 
 class TestSpectrogramDataset(unittest.TestCase):
     def setUp(self):
         self.dataset = SpectrogramDataset('data/processed/spectrograms', transform=None)
 
     def test_length(self):
-        self.assertEqual(len(self.dataset), expected_length)  # Replace expected_length with the actual expected length
+        expected_length=60
+        self.assertEqual(len(self.dataset), expected_length)
 
     def test_get_item(self):
         sample = self.dataset[0]
-        self.assertIsNotNone(sample)  # Ensure that a sample is returned
-        self.assertIn('image', sample)  # Check if the sample contains an image
-        self.assertIn('label', sample)  # Check if the sample contains a label
+        self.assertIsNotNone(sample)  # tocheck if no sample is returned
+        self.assertIn('image', sample)  # Check if the sample has an image
+        self.assertIn('label', sample)  # Check if the sample has a label
 
     def test_labels(self):
         labels = [self.dataset[i]['label'] for i in range(len(self.dataset))]
