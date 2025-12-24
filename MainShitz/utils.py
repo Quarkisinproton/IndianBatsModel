@@ -10,19 +10,17 @@ from PIL import Image
 
 
 def load_model(model_path):
-    """Load a saved model. Fingers crossed it's not corrupted."""
     model = torch.load(model_path)
     model.eval()
     return model
 
 
 def save_model(model, model_path):
-    """Save model to disk. Future you will thank present you."""
     torch.save(model, model_path)
 
 
 def load_data(data_path):
-    """Load all images from a directory. Memory go brrr."""
+    #Load all images from a directory.]
     images = []
     labels = []
     for label in os.listdir(data_path):

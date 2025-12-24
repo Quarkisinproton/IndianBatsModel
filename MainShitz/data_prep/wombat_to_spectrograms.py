@@ -48,7 +48,7 @@ def find_audio_for_json(json_path: Path, raw_audio_dirs: List[Path]) -> Optional
             cand = d / (stem + ext)
             if cand.exists():
                 return cand
-        # try scanning raw_audio_dir for a file containing the stem
+            
         for f in d.glob('*'):
             if stem in f.stem:
                 return f
@@ -177,7 +177,6 @@ def process_all(raw_audio_dirs: List[str], json_dir: str, out_dir: str, species_
             print(f"Warning: Could not find audio for {jpath.name}")
             continue
 
-        # annotations might be top-level or under keys
         anns = None
         if isinstance(data, dict):
             for key in ('annotations', 'labels', 'segments', 'events'):

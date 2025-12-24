@@ -2,8 +2,6 @@
 extract_end_frequency.py - Where the call ends, literally
 
 Finds the dominant frequency in the last few frames of each bat call.
-Because apparently knowing how a bat ends its sentence helps us ID it.
-Who knew bats had punctuation preferences?
 
 Outputs: CSV with json_file, audio_file, segment_index, label, start, end, end_freq_hz
 """
@@ -15,7 +13,6 @@ from typing import Optional
 import numpy as np
 import librosa
 
-# reuse helper from wombat_to_spectrograms where possible
 from MainShitz.data_prep import wombat_to_spectrograms as w2s
 
 
@@ -35,7 +32,6 @@ def compute_end_frequency(y: np.ndarray, sr: int, start_s: float, end_s: float, 
     seg = w2s.extract_segment(y, sr, start_s, end_s)
     if seg.size == 0:
         return float('nan')
-    # short segments might be shorter than n_fft; librosa.stft will pad
     S = librosa.stft(seg, n_fft=n_fft, hop_length=hop_length)
     S_power = np.abs(S) ** 2
     # choose last tail_frames (or less if not available)
@@ -66,7 +62,7 @@ def process_all_and_write_csv(raw_audio_dirs: list, json_dir: str, out_csv: str,
             audio_path = w2s.find_audio_for_json(jpath, raw_audio_dirs)
             if audio_path is None:
                 continue
-            # get annotations similar to wombat_to_spectrograms
+            # get annotations slike to wombat_to_spectrograms
             anns = None
             if isinstance(data, dict):
                 for key in ('annotations', 'labels', 'segments', 'events'):

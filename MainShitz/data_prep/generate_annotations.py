@@ -38,10 +38,9 @@ def generate_annotations(raw_audio_dirs, output_dir, label_strategy='folder'):
         
         for audio_path in tqdm(audio_files, desc=f"Processing {d.name}"):
             try:
-                # Get duration
                 duration = librosa.get_duration(path=audio_path)
                 
-                # Determine label
+                
                 if label_strategy == 'folder':
                     label = d.name
                 elif label_strategy == 'filename':
@@ -62,8 +61,6 @@ def generate_annotations(raw_audio_dirs, output_dir, label_strategy='folder'):
                     ]
                 }
                 
-                # Save JSON
-                # Use the audio filename stem for the json filename
                 json_name = audio_path.stem + '.json'
                 json_path = output_dir / json_name
                 

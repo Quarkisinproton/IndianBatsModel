@@ -15,7 +15,7 @@ def preprocess_image(img, size=(128, 128)):
     """Resize and tensorize. The boring but necessary stuff."""
     img = img.resize(size, Image.BILINEAR)
     img_array = np.array(img, dtype=np.float32) / 255.0
-    # HWC to CHW because PyTorch is picky about dimensions
+    # HWC to CHW caus PyTorch is picky abt dimensions
     if img_array.ndim == 3:
         img_tensor = torch.from_numpy(img_array.transpose(2, 0, 1))
     else:
@@ -55,6 +55,3 @@ class SpectrogramDataset(Dataset):
             image = preprocess_image(image, self.image_size)
 
         return image, label
-
-# Example of how to use the dataset
-# dataset = SpectrogramDataset(root_dir='data/processed/spectrograms')

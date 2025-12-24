@@ -1,5 +1,5 @@
 import unittest
-from Model.datasets.spectrogram_dataset import SpectrogramDataset
+from MainShitz.datasets.spectrogram_dataset import SpectrogramDataset
 
 class TestSpectrogramDataset(unittest.TestCase):
     def setUp(self):

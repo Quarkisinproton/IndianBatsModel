@@ -117,31 +117,43 @@ IndianBatsModel/
 
 ---
 
-## Installation
+## Installation & Setup
 
-### Prerequisites
-- Python 3.8+
-- CUDA-capable GPU (recommended)
-- FFmpeg (for audio processing)
+### 🚀 Recommended: Run on Kaggle (Easiest)
 
-### Setup
+The easiest way to use this project is through **Kaggle Notebooks** - no local setup required!
+
+1. Go to [Kaggle](https://www.kaggle.com)
+2. Create a new notebook or fork our existing notebooks
+3. Upload/link the competition dataset
+4. Copy the code from `notebooks_for_kaggle/` folder:
+   - `kaggle_train.ipynb` - For training the model
+   - `kaggle_inference_pipeline.ipynb` - For making predictions
+5. Run the cells - all dependencies are pre-installed on Kaggle!
+
+
+**Benefits of Kaggle:**
+- Free GPU/TPU access (up to 30 hours/week)
+- All dependencies pre-installed (torch, librosa, etc.)
+- Easy dataset management
+- No local setup headaches
+
+### 💻 Local Development (Optional)
+
+If you prefer local development:
 
 ```bash
 # Clone the repository
 git clone https://github.com/Quarkisinproton/IndianBatsModel.git
 cd IndianBatsModel
 
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# or: venv\Scripts\activate  # Windows
-
 # Install dependencies
 pip install -r requirements.txt
-
-# Install package in development mode
-pip install -e .
 ```
+
+**Requirements:**
+- Python 3.8+
+- CUDA-capable GPU (recommended for training)
 
 ### Dependencies
 ```

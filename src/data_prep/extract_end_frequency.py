@@ -15,7 +15,7 @@ import numpy as np
 import librosa
 
 # reuse helper from wombat_to_spectrograms where possible
-from Model.data_prep import wombat_to_spectrograms as w2s
+from MainShitz.data_prep import wombat_to_spectrograms as w2s
 
 
 def compute_end_frequency(y: np.ndarray, sr: int, start_s: float, end_s: float, n_fft: int = 2048, hop_length: int = 512, tail_frames: int = 3) -> float:

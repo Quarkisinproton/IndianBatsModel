@@ -38,7 +38,6 @@ class SpectrogramWithFeaturesDataset(Dataset):
         self.numeric_cols = numeric_cols
         if features_csv:
             df = pd.read_csv(features_csv)
-            # infer numeric_cols if not provided
             if self.numeric_cols is None:
                 self.numeric_cols = [c for c in df.columns if c not in ('json_file','audio_file','segment_index','label','start','end')]
             for _, row in df.iterrows():
@@ -53,7 +52,7 @@ class SpectrogramWithFeaturesDataset(Dataset):
                 self.features_map[key] = np.array(vec, dtype=np.float32)
 
         if self.numeric_cols is None:
-            # ensure at least one-dim vector
+            # at least one-dim vector
             self.numeric_cols = []
 
     def _scan_files(self):

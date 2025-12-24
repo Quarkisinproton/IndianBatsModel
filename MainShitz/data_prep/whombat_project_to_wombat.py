@@ -5,8 +5,7 @@ Whombat exports one big JSON with everything. Our pipeline wants
 per-audio JSONs. This script does the translation.
 
 Takes Whombat's nested structure and spits out clean per-recording JSONs
-with start_time, end_time, and species labels. Yes, the names are confusing.
-No, I didn't name them.
+with start_time, end_time, and species labels.
 """
 
 from __future__ import annotations
@@ -27,9 +26,7 @@ class ConvertedProjectSummary:
     sound_events_skipped_unlabeled: int
 
 
-def _safe_filename_stem(name: str) -> str:
-    name = name.strip()
-    # Keep it stable and filesystem-safe.
+def _safe_filename_stem(name: str) 
     name = re.sub(r"[^A-Za-z0-9._-]+", "_", name)
     return name.strip("._-") or "recording"
 
@@ -124,7 +121,7 @@ def convert_whombat_project_to_wombat_jsons(
         if cleaned:
             se_uuid_to_tag_ids[str(se_uuid)] = cleaned
 
-    # group annotations by recording uuid
+    # group annotations by uuid
     rec_uuid_to_annotations: Dict[str, List[Dict[str, Any]]] = {}
     skipped_unlabeled = 0
     written_events = 0
@@ -155,7 +152,7 @@ def convert_whombat_project_to_wombat_jsons(
         rec_uuid_to_annotations.setdefault(rec_uuid, []).append(ann)
         written_events += 1
 
-    # write JSONs
+    # write JSON
     jsons_written = 0
     for rec_uuid, anns in rec_uuid_to_annotations.items():
         audio_basename = rec_uuid_to_basename.get(rec_uuid)
@@ -170,7 +167,7 @@ def convert_whombat_project_to_wombat_jsons(
 
         payload = {
             "audio_file": audio_basename,
-            # Keep as basename so wombat_to_spectrograms can resolve via raw_audio_dirs.
+            # Keep as basename
             "recording": audio_basename,
             "annotations": anns_sorted,
             "source": {

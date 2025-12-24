@@ -1,9 +1,3 @@
-"""
-train.py - Where models learn to tell bats apart
-
-Handles the full training loop: data loading, model init, optimization,
-and checkpointing. Supports both vanilla CNN and the fancier feature-fused version.
-"""
 import os
 import torch
 import torch.nn as nn
@@ -18,9 +12,8 @@ import yaml
 import numpy as np
 import json
 
-
 def train_model(config):
-    # config parsing with fallbacks because users forget things
+    #fallbacks
     data_cfg = config.get('data', {})
     train_dir = data_cfg.get('train_spectrograms') or 'data/processed/spectrograms'
     num_classes = data_cfg.get('num_classes') or config.get('model', {}).get('num_classes') or 3
@@ -36,7 +29,6 @@ def train_model(config):
         train_dataset = SpectrogramWithFeaturesDataset(train_dir, features_csv)
         use_features = True
     else:
-        # don't override dataset transforms here; allow dataset to apply its defaults
         train_dataset = SpectrogramDataset(train_dir)
         use_features = False
 
@@ -49,12 +41,11 @@ def train_model(config):
         print("3. No images found in the spectrogram directory.")
         raise ValueError("Dataset is empty. Cannot proceed with training.")
 
-    # build a weighted sampler to help with class imbalance when possible
+    # build a weighted sampler to help with class imbalance
     try:
         if use_features:
             labels = train_dataset.labels
         else:
-            # ImageFolder-like dataset exposes .samples as (path, class_idx)
             labels = [y for _, y in train_dataset.samples] if hasattr(train_dataset, 'samples') else getattr(train_dataset, 'targets', [])
         labels = np.array(labels, dtype=int)
         if labels.size > 0:
@@ -70,14 +61,14 @@ def train_model(config):
 
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=(sampler is None), sampler=sampler, num_workers=num_workers)
 
-    # Initialize model, loss function, and optimizer
+    # model, loss function, and optimizer
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
     if use_features:
         # infer numeric feature dimension from a sample
         sample_image, sample_feat, sample_label = train_dataset[0]
         feat_dim = sample_feat.numel()
-        # use pretrained backbone for better transfer learning when data is small
+        # Transfer learning when data is small
         model = CNNWithFeatures(num_classes=num_classes, numeric_feat_dim=feat_dim, pretrained=True)
     else:
         model = CNN(num_classes=num_classes)
@@ -91,12 +82,10 @@ def train_model(config):
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=lr)
 
-    # Prepare for saving model
     model_save_path = train_cfg.get('model_save_path') or 'models/bat_model.pth'
     os.makedirs(os.path.dirname(model_save_path) or '.', exist_ok=True)
     best_loss = float('inf')
 
-    # Training loop
     for epoch in range(num_epochs):
         model.train()
         running_loss = 0.0
@@ -131,7 +120,7 @@ def train_model(config):
                 save_model(model, model_save_path)
                 print(f"  New best model saved with loss {best_loss:.4f}")
         else:
-            print('No training data found. Check processed spectrograms path:', train_dir)
+            print('No training data found. Check processed spectrograms path U Moron:', train_dir)
             break
 
     # save class mapping for inference if available
