@@ -1,0 +1,60 @@
+"""
+spectrogram_dataset.py - Basic image dataset for spectrograms
+
+Simple dataset that loads spectrograms from folders organized by species.
+No fancy features, just images and labels. Sometimes simple is good.
+"""
+from torch.utils.data import Dataset
+from PIL import Image
+import torch
+import numpy as np
+import os
+
+
+def preprocess_image(img, size=(128, 128)):
+    """Resize and tensorize. The boring but necessary stuff."""
+    img = img.resize(size, Image.BILINEAR)
+    img_array = np.array(img, dtype=np.float32) / 255.0
+    # HWC to CHW because PyTorch is picky about dimensions
+    if img_array.ndim == 3:
+        img_tensor = torch.from_numpy(img_array.transpose(2, 0, 1))
+    else:
+        img_tensor = torch.from_numpy(img_array).unsqueeze(0)
+    return img_tensor
+
+
+class SpectrogramDataset(Dataset):
+    def __init__(self, root_dir, transform=None, image_size=(128, 128)):
+        self.root_dir = root_dir
+        self.transform = transform
+        self.image_size = image_size
+        self.image_paths = []
+        self.labels = []
+        self._load_data()
+
+    def _load_data(self):
+        for label in os.listdir(self.root_dir):
+            species_dir = os.path.join(self.root_dir, label)
+            if os.path.isdir(species_dir):
+                for img_file in os.listdir(species_dir):
+                    img_path = os.path.join(species_dir, img_file)
+                    self.image_paths.append(img_path)
+                    self.labels.append(label)
+
+    def __len__(self):
+        return len(self.image_paths)
+
+    def __getitem__(self, idx):
+        img_path = self.image_paths[idx]
+        image = Image.open(img_path).convert("RGB")
+        label = self.labels[idx]
+
+        if self.transform:
+            image = self.transform(image)
+        else:
+            image = preprocess_image(image, self.image_size)
+
+        return image, label
+
+# Example of how to use the dataset
+# dataset = SpectrogramDataset(root_dir='data/processed/spectrograms')

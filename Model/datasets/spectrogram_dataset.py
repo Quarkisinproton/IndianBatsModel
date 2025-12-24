@@ -1,7 +1,12 @@
+"""
+spectrogram_dataset.py - Legacy dataset (see MainShitz version for newer code)
+
+Basic spectrogram loader. Kept around but you probably want the other one.
+"""
 from torch.utils.data import Dataset
-from torchvision import transforms
 from PIL import Image
 import os
+
 
 class SpectrogramDataset(Dataset):
     def __init__(self, root_dir, transform=None):
@@ -32,10 +37,3 @@ class SpectrogramDataset(Dataset):
             image = self.transform(image)
 
         return image, label
-
-# Example of how to use the dataset
-# transform = transforms.Compose([
-#     transforms.Resize((128, 128)),
-#     transforms.ToTensor(),
-# ])
-# dataset = SpectrogramDataset(root_dir='data/processed/spectrograms', transform=transform)

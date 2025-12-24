@@ -1,3 +1,9 @@
+"""
+spectrogram_with_features_dataset.py - Images + numbers = better predictions
+
+PyTorch Dataset that serves spectrograms alongside numeric features.
+The CNN sees the image, the MLP sees the features, everybody wins.
+"""
 from pathlib import Path
 from PIL import Image
 import torch
@@ -9,16 +15,16 @@ import os
 
 
 class SpectrogramWithFeaturesDataset(Dataset):
-    """Dataset that yields (image_tensor, numeric_feature_tensor, label).
-
-    - spectrogram images should be in root_dir/<species>/*.png
-    - features_csv should contain columns: audio_file, segment_index and numeric cols (e.g. end_freq_hz)
-    - images are expected to be named "{audio_stem}_{segment_index}.png" by the converter
+    """Dataset yielding (image, features, label) tuples.
+    
+    Expects:
+    - spectrograms in root_dir/<species>/*.png
+    - features CSV with audio_file, segment_index, and numeric columns
+    - image names matching "{audio_stem}_{segment_index}.png"
     """
     def __init__(self, root_dir: str, features_csv: str = None, transform=None, numeric_cols: list = None):
         self.root = Path(root_dir)
         self.transform = transform or transforms.Compose([
-            transforms.Resize((224, 224)),
             transforms.ToTensor(),
             transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
         ])

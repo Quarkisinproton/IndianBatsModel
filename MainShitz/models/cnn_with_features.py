@@ -1,12 +1,18 @@
+"""
+cnn_with_features.py - The main event: ResNet18 + numeric features fusion
+
+This is where the magic happens. Takes spectrogram images through a pretrained
+ResNet18, concatenates end-frequency features, and classifies bat species.
+Basically a CNN that also knows how to read spreadsheets.
+"""
 import torch
 import torch.nn as nn
 import torchvision.models as models
 
 
 class CNNWithFeatures(nn.Module):
-    """ResNet18 backbone producing an embedding concatenated with numeric features.
-
-    images -> resnet18 (512-d) -> concat numeric features -> MLP classifier
+    """
+    images -> resnet18 (512-d) -> concat features -> MLP -> species
     """
     def __init__(self, num_classes: int, numeric_feat_dim: int = 1, pretrained: bool = True):
         super().__init__()
@@ -30,7 +36,6 @@ class CNNWithFeatures(nn.Module):
 
     def forward(self, images: torch.Tensor, numeric_feats: torch.Tensor = None) -> torch.Tensor:
         emb = self.backbone(images)
-        # emb shape (B, 512)
         if numeric_feats is None or numeric_feats.numel() == 0:
             out = self.classifier(emb)
         else:

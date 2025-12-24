@@ -1,17 +1,22 @@
+"""
+evaluate.py - Moment of truth: does our model actually work?
+
+Loads a trained model and runs it on test data to get accuracy.
+Hopefully the numbers go up, not down.
+"""
 import os
 import torch
 import yaml
-import json
 import numpy as np
 from torch.utils.data import DataLoader
-from Model.datasets.spectrogram_dataset import SpectrogramDataset
-from Model.datasets.spectrogram_with_features_dataset import SpectrogramWithFeaturesDataset
-from Model.models.cnn import CNN
-from Model.models.cnn_with_features import CNNWithFeatures
-from Model.utils import load_model
+from MainShitz.datasets.spectrogram_dataset import SpectrogramDataset
+from MainShitz.datasets.spectrogram_with_features_dataset import SpectrogramWithFeaturesDataset
+from MainShitz.models.cnn import CNN
+from MainShitz.models.cnn_with_features import CNNWithFeatures
+from MainShitz.utils import load_model
+
 
 def evaluate_model(config_path):
-    # Load configuration
     with open(config_path, 'r') as file:
         config = yaml.safe_load(file)
 
@@ -38,8 +43,6 @@ def evaluate_model(config_path):
 
     # Load model
     if use_features:
-        # We need to know feat_dim to initialize the model structure before loading weights
-        # Or we can try to load it if we saved the architecture info, but here we infer from dataset
         if len(dataset) > 0:
             sample_image, sample_feat, sample_label = dataset[0]
             feat_dim = sample_feat.numel()
@@ -55,7 +58,7 @@ def evaluate_model(config_path):
         model.load_state_dict(torch.load(model_path, map_location=device))
         print(f"Loaded model from {model_path}")
     else:
-        print(f"Model file not found at {model_path}")
+        print(f"Model file not found at {model_path} NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
         return
 
     model.to(device)
@@ -85,8 +88,11 @@ def evaluate_model(config_path):
     if total > 0:
         accuracy = correct / total
         print(f'Accuracy of the model: {accuracy:.2f}')
+        if accuracy < 70:
+            print("FYI dis Trash");
+        
     else:
-        print("No data to evaluate.")
+        print("No data to evaluate.........WTF is wrong with you")
 
 if __name__ == "__main__":
     evaluate_model('configs/config.yaml')

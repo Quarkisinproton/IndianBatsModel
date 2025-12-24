@@ -1,7 +1,8 @@
 """
-utils.py - Legacy utilities (mostly superseded by MainShitz/utils.py)
+utils.py - The junk drawer of helper functions
 
-Kept for backwards compatibility. Consider using MainShitz version instead.
+Model I/O and data loading utilities. Nothing fancy,
+just the stuff that didn't fit anywhere else.
 """
 import os
 import torch
@@ -9,19 +10,19 @@ from PIL import Image
 
 
 def load_model(model_path):
-    """Load and set model to eval mode."""
+    """Load a saved model. Fingers crossed it's not corrupted."""
     model = torch.load(model_path)
     model.eval()
     return model
 
 
 def save_model(model, model_path):
-    """Pickle the model to disk."""
+    """Save model to disk. Future you will thank present you."""
     torch.save(model, model_path)
 
 
 def load_data(data_path):
-    """Bulk load images. Hope you have RAM."""
+    """Load all images from a directory. Memory go brrr."""
     images = []
     labels = []
     for label in os.listdir(data_path):

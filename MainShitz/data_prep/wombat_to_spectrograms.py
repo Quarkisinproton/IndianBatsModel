@@ -1,3 +1,9 @@
+"""
+wombat_to_spectrograms.py - Turn bat squeaks into pretty pictures
+
+Reads Wombat JSON annotations, finds the corresponding audio files,
+chops them into segments, and generates mel spectrograms.
+"""
 import json
 import os
 from pathlib import Path
@@ -9,6 +15,7 @@ import matplotlib.pyplot as plt
 
 
 def ensure_dir(path: Path) -> None:
+    #mkdir -p but in python. groundbreaking stuff.
     path.mkdir(parents=True, exist_ok=True)
 
 
@@ -78,7 +85,6 @@ def normalize_annotations(raw_anns) -> List[Dict]:
     if raw_anns is None:
         return []
     if isinstance(raw_anns, dict):
-        # maybe a dict of segments
         return [raw_anns]
     if isinstance(raw_anns, list):
         return raw_anns
@@ -122,7 +128,7 @@ def process_audio_file(audio_path: Path, annotations: Iterable[Dict], out_base: 
             
         S_db = make_mel_spectrogram(seg, sr)
         safe_label = str(label).strip()
-        # avoid accidental nested directories or invalid path characters
+        # avoid accidental nested dirs or invalid path char
         safe_label = safe_label.replace('/', '_').replace('\\', '_').replace(os.sep, '_')
         safe_label = '_'.join(safe_label.split())
         out_dir = out_base / safe_label
@@ -132,7 +138,7 @@ def process_audio_file(audio_path: Path, annotations: Iterable[Dict], out_base: 
         
         try:
             save_spectrogram_image(S_db, out_path)
-            # print(f"Saved {out_path}") # Commented out to avoid spam, but useful for deep debug
+            print(f"Saved {out_path}")
         except Exception as e:
             print(f"Error saving spectrogram to {out_path}: {e}")
 
@@ -179,7 +185,6 @@ def process_all(raw_audio_dirs: List[str], json_dir: str, out_dir: str, species_
                     anns = data[key]
                     break
             if anns is None:
-                # maybe the JSON itself is a list-like mapping
                 if any(k in data for k in ('start_time', 'end_time', species_key)):
                     anns = [data]
         else:
@@ -195,7 +200,7 @@ def process_all(raw_audio_dirs: List[str], json_dir: str, out_dir: str, species_
     
     print(f"Processed {processed_count} files successfully.")
     
-    # Debug: List output directory contents
+    # ls output directory contents
     print(f"Checking output directory: {out_base}")
     if out_base.exists():
         subdirs = [d.name for d in out_base.iterdir() if d.is_dir()]

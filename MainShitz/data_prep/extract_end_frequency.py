@@ -1,10 +1,11 @@
-"""Extract end-frequency (Hz) from annotated call segments exported by Wombat.
+"""
+extract_end_frequency.py - Where the call ends, literally
 
-This script finds the recording for each JSON, extracts each annotation segment,
-computes the STFT for the last few frames of the segment, and returns the
-frequency bin with maximum average energy (interpreted as end-frequency).
+Finds the dominant frequency in the last few frames of each bat call.
+Because apparently knowing how a bat ends its sentence helps us ID it.
+Who knew bats had punctuation preferences?
 
-Outputs a CSV with columns: json_file, audio_file, segment_index, label, start, end, end_freq_hz
+Outputs: CSV with json_file, audio_file, segment_index, label, start, end, end_freq_hz
 """
 from pathlib import Path
 import csv
@@ -15,7 +16,7 @@ import numpy as np
 import librosa
 
 # reuse helper from wombat_to_spectrograms where possible
-from Model.data_prep import wombat_to_spectrograms as w2s
+from MainShitz.data_prep import wombat_to_spectrograms as w2s
 
 
 def compute_end_frequency(y: np.ndarray, sr: int, start_s: float, end_s: float, n_fft: int = 2048, hop_length: int = 512, tail_frames: int = 3) -> float:

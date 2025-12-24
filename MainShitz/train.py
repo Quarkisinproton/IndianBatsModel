@@ -1,19 +1,26 @@
+"""
+train.py - Where models learn to tell bats apart
+
+Handles the full training loop: data loading, model init, optimization,
+and checkpointing. Supports both vanilla CNN and the fancier feature-fused version.
+"""
 import os
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
-from Model.datasets.spectrogram_dataset import SpectrogramDataset
-from Model.datasets.spectrogram_with_features_dataset import SpectrogramWithFeaturesDataset
-from Model.models.cnn import CNN
-from Model.models.cnn_with_features import CNNWithFeatures
-from Model.utils import save_model
+from MainShitz.datasets.spectrogram_dataset import SpectrogramDataset
+from MainShitz.datasets.spectrogram_with_features_dataset import SpectrogramWithFeaturesDataset
+from MainShitz.models.cnn import CNN
+from MainShitz.models.cnn_with_features import CNNWithFeatures
+from MainShitz.utils import save_model
 import yaml
 import numpy as np
 import json
 
+
 def train_model(config):
-    # Resolve config values with fallbacks
+    # config parsing with fallbacks because users forget things
     data_cfg = config.get('data', {})
     train_dir = data_cfg.get('train_spectrograms') or 'data/processed/spectrograms'
     num_classes = data_cfg.get('num_classes') or config.get('model', {}).get('num_classes') or 3

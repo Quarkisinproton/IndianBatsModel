@@ -1,26 +1,12 @@
-"""Convert a Whombat annotation project export into per-audio Wombat-style JSONs.
+"""
+whombat_project_to_wombat.py - Format converter from Whombat to Wombat
 
-This repo's training pipeline expects a directory of JSON files where each JSON
-looks like:
+Whombat exports one big JSON with everything. Our pipeline wants
+per-audio JSONs. This script does the translation.
 
-{
-  "audio_file": "foo.wav",
-  "recording": "foo.wav",
-  "annotations": [
-    {"start_time": 0.12, "end_time": 0.15, "label": "Pipistrellus_tenuis"}
-  ]
-}
-
-Whombat project exports (like the provided `data/tenuis annotations.json`) store
-recordings, sound_events with bounding boxes, and sound_event_annotations mapping
-those events to tag IDs (e.g. Species).
-
-We extract the time bounds from the bounding box coordinates:
-- start_time = coordinates[0]
-- end_time   = coordinates[2]
-
-Frequency bounds are ignored by the current training pipeline, but can be kept
-in the annotation payload for future use.
+Takes Whombat's nested structure and spits out clean per-recording JSONs
+with start_time, end_time, and species labels. Yes, the names are confusing.
+No, I didn't name them.
 """
 
 from __future__ import annotations
@@ -49,8 +35,7 @@ def _safe_filename_stem(name: str) -> str:
 
 
 def _basename_from_any_path(path_str: str) -> str:
-    """Return filename component for Windows or POSIX-like path strings."""
-    # Whombat exports often embed Windows paths; on Linux, Path('C:\\...') won't split.
+    #Return filename
     if '\\' in path_str or (len(path_str) >= 2 and path_str[1] == ':'):
         return PureWindowsPath(path_str).name
     return Path(path_str).name
@@ -96,7 +81,6 @@ def convert_whombat_project_to_wombat_jsons(
         except Exception:
             continue
 
-    # recording uuid -> (original path string, basename)
     rec_uuid_to_path: Dict[str, str] = {}
     rec_uuid_to_basename: Dict[str, str] = {}
     for rec in data.get("recordings", []) or []:
@@ -107,7 +91,6 @@ def convert_whombat_project_to_wombat_jsons(
         rec_uuid_to_path[str(uuid)] = str(path)
         rec_uuid_to_basename[str(uuid)] = _basename_from_any_path(str(path))
 
-    # sound_event uuid -> (recording uuid, start_s, end_s, low_hz, high_hz)
     se_uuid_to_info: Dict[str, Tuple[str, float, float, Optional[float], Optional[float]]] = {}
     for se in data.get("sound_events", []) or []:
         se_uuid = se.get("uuid")
@@ -183,7 +166,6 @@ def convert_whombat_project_to_wombat_jsons(
         out_stem = _safe_filename_stem(Path(audio_basename).stem)
         out_path = output_dir / f"{out_stem}.json"
 
-        # Stable ordering helps reproducibility.
         anns_sorted = sorted(anns, key=lambda a: (a.get("start_time", 0.0), a.get("end_time", 0.0)))
 
         payload = {

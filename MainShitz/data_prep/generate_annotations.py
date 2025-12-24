@@ -1,3 +1,10 @@
+"""
+generate_annotations.py - Auto-label audio files when you're lazy
+
+Creates Wombat-style JSON annotations from raw audio directories.
+Labels are derived from folder names or filenames. Not perfect,
+but better than labeling thousands of files by hand.
+"""
 import argparse
 import json
 import os
@@ -5,7 +12,9 @@ from pathlib import Path
 import librosa
 from tqdm import tqdm
 
+
 def generate_annotations(raw_audio_dirs, output_dir, label_strategy='folder'):
+    """Generate annotation JSONs. Label strategy: folder or filename."""
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     
