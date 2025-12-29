@@ -26,7 +26,7 @@ class ConvertedProjectSummary:
     sound_events_skipped_unlabeled: int
 
 
-def _safe_filename_stem(name: str) 
+def _safe_filename_stem(name: str):
     name = re.sub(r"[^A-Za-z0-9._-]+", "_", name)
     return name.strip("._-") or "recording"
 
