@@ -24,6 +24,7 @@ def train_model(config):
     
     batch_size = train_cfg.get('batch_size') or 16
     lr = train_cfg.get('learning_rate') or 1e-3
+    weight_decay = train_cfg.get('weight_decay') or 0.0
     num_epochs = train_cfg.get('num_epochs') or 10
     num_workers = train_cfg.get('num_workers') if train_cfg.get('num_workers') is not None else 0
     model_save_path = train_cfg.get('model_save_path') or 'models/bat_model.pth'
@@ -71,7 +72,7 @@ def train_model(config):
     model = model.to(device)
 
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=lr)
+    optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)
 
     os.makedirs(os.path.dirname(model_save_path) or '.', exist_ok=True)
     best_loss = float('inf')
@@ -162,6 +163,10 @@ def train_model(config):
     plot_path = os.path.join(os.path.dirname(model_save_path), 'training_curves.png')
     plt.savefig(plot_path)
     print(f"Training curves saved to {plot_path}")
+
+    # Report final validation loss for hyperparameter tuning
+    if val_losses:
+        print(f"FINAL_VAL_LOSS: {val_losses[-1]}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Train IndianBatsModel')
