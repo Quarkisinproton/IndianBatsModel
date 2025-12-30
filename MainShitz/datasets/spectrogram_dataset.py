@@ -30,16 +30,23 @@ class SpectrogramDataset(Dataset):
         self.image_size = image_size
         self.image_paths = []
         self.labels = []
+        self.class_to_idx = {}
+        self.classes = []
         self._load_data()
 
     def _load_data(self):
-        for label in os.listdir(self.root_dir):
+        # First, get all class names (folder names) and sort for consistency
+        class_names = sorted([d for d in os.listdir(self.root_dir) 
+                              if os.path.isdir(os.path.join(self.root_dir, d))])
+        self.classes = class_names
+        self.class_to_idx = {name: idx for idx, name in enumerate(class_names)}
+        
+        for label in class_names:
             species_dir = os.path.join(self.root_dir, label)
-            if os.path.isdir(species_dir):
-                for img_file in os.listdir(species_dir):
-                    img_path = os.path.join(species_dir, img_file)
-                    self.image_paths.append(img_path)
-                    self.labels.append(label)
+            for img_file in os.listdir(species_dir):
+                img_path = os.path.join(species_dir, img_file)
+                self.image_paths.append(img_path)
+                self.labels.append(self.class_to_idx[label])  # Store integer index
 
     def __len__(self):
         return len(self.image_paths)
@@ -54,4 +61,4 @@ class SpectrogramDataset(Dataset):
         else:
             image = preprocess_image(image, self.image_size)
 
-        return image, label
+        return image, torch.tensor(label, dtype=torch.long)
